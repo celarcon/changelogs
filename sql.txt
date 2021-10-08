@@ -1,0 +1,29 @@
+
+CREATE TABLE project (
+    id int(11) NOT NULL  AUTO_INCREMENT PRIMARY KEY,
+    project_name varchar(255),
+    company varchar(255),
+    state  bit(1) NOT NULL  DEFAULT b'0'
+);
+CREATE TABLE version (
+    id int(11) NOT NULL  AUTO_INCREMENT PRIMARY KEY,
+    project_id int(11) NOT NULL,
+    version_name varchar(255),
+    description varchar(255),
+    description_html varchar(255),
+    version_date  datetime NOT NULL DEFAULT current_timestamp(),
+    state bit(1) NOT NULL  DEFAULT b'0',
+    publisher  varchar(50)
+);
+CREATE TABLE version_changes (
+    id int(11) NOT NULL  AUTO_INCREMENT PRIMARY KEY,
+    version_id int(11) NOT NULL,
+    change_name varchar(255),
+    description_html varchar(255),
+    description_long varchar(255)
+);
+CREATE TABLE user (
+    id int(11) NOT NULL  AUTO_INCREMENT PRIMARY KEY,
+    name varchar(255),
+    password varchar(255)
+);

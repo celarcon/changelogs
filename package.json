@@ -1,0 +1,26 @@
+{
+  "name": "api-back",
+  "version": "1.0.0",
+  "description": "change logs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "author": "santi OSSIAN",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "express": "4.17.1",
+    "json-sql": "^0.5.0",
+    "jwt-simple": "0.5.6",
+    "moment": "^2.29.1",
+    "mysql": "^2.18.1",
+    "mysql2": "^2.3.0",
+    "sequelize": "^6.6.5",
+    "validator": "^13.6.0"
+  },
+  "devDependencies": {
+    "nodemon": "2.0.13"
+  }
+}
