@@ -5,14 +5,15 @@ var secret = "secret-OSSIAN";
 
 exports.authenticated = function(req, res, next){
 
-
-    if(!req.headers.authenticated){
+    console.log(req.headers.authorization);
+    if(!req.headers.authorization){
         return res.status(403).send({
             message: 'la petición no tiene cabecera de authorization'
         });
     }
 
-    var token = req.headers.authenticated.replace(/['"]+/g, '');
+    var token = req.headers.authorization.replace(/['"]+/g, '');
+
     try{
         var payload = jwt.decode(token, secret);
 
