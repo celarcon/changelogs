@@ -5,7 +5,6 @@ var secret = "secret-OSSIAN";
 
 exports.authenticated = function(req, res, next){
 
-    console.log(req.headers.authorization);
     if(!req.headers.authorization){
         return res.status(403).send({
             message: 'la petición no tiene cabecera de authorization'
@@ -19,7 +18,7 @@ exports.authenticated = function(req, res, next){
 
         if(payload.exp <= moment().unix()){
             return res.status(403).send({
-                message: 'El tojen ha expirado'
+                message: 'El token ha expirado'
             });
         }
     }catch(ex){

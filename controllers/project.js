@@ -10,23 +10,25 @@ var controller = {
         var params = req.body;
 
         try{
-            var validator_name = !validator.isEmpty(params.name);
+            var validator_project_name = !validator.isEmpty(params.project_name);
             var validator_company = !validator.isEmpty(params.company);
             var validator_state = !validator.isEmpty(params.state);
 
-            if(validator_name && validator_company && validator_state){
+            if(validator_project_name && validator_company && validator_state){
                 var project = new Project();
 
-                project.name = params.name;
+                project.project_name = params.project_name;
                 project.company = params.company;
                 project.state = params.state;
 
+                console.log(project.state);
+                
                 var response = await project.save();
                 
                 return res.status(200).send({
                     message: response
                 });
-                
+
             }else{
                 return res.status(200).send({
                     message: 'faltan datos'
@@ -38,10 +40,6 @@ var controller = {
                 message: 'faltan datos por entregar'
             });
         }
-
-        return res.status(200).send({
-            message: "ruta para crear proyectos"
-        });
     },
     getProjects: function(req, res){
         return res.status(200).send({
