@@ -22,7 +22,7 @@ var controller = {
                 project.state = params.state;
 
                 console.log(project.state);
-                
+
                 var response = await project.save();
                 
                 return res.status(200).send({
@@ -41,15 +41,32 @@ var controller = {
             });
         }
     },
-    getProjects: function(req, res){
+    getProjects: async function(req, res){
+
+        const projects = await Project.findAll();
+
         return res.status(200).send({
-            message: "ruta que me devulve los proyectos"
+            message: projects
         });
     },
     updateProject: function(req, res){
         return res.status(200).send({
             message: "ruta que edita los proyectos"
         });
+    },
+    deleteProject: function(req, res){
+
+        var id = req.params.id;
+
+        /*Project.find(id).on('success', function(project) {
+            project.destroy().on('success', function(u) {
+              if (u && u.deletedAt) {
+                return res.status(200).send({
+                    message: "proyecto eliminado correctamente"
+                });
+              }
+            })
+          });*/
     }
 };
 
