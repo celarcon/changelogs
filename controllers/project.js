@@ -54,19 +54,24 @@ var controller = {
             message: "ruta que edita los proyectos"
         });
     },
-    deleteProject: function(req, res){
+    deleteProject: async function(req, res){
 
-        var id = req.params.id;
+        var idProject = req.params.id;
 
-        /*Project.find(id).on('success', function(project) {
-            project.destroy().on('success', function(u) {
-              if (u && u.deletedAt) {
-                return res.status(200).send({
-                    message: "proyecto eliminado correctamente"
-                });
-              }
-            })
-          });*/
+        let project = await Project.findOne({
+            where: {
+              id: idProject
+            }
+          });
+       
+          project.destroy().then(function(projectDelete){ // r
+            return res.status(200).send({
+                message: "proyecto eliminado correctamente",
+                res: projectDelete
+            });    
+          }, function(err){
+              console.log(err); 
+          });
     }
 };
 
