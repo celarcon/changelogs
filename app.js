@@ -5,7 +5,7 @@ var express = require('express');
 
 //Ejecutar express
 var app = express();
-const sequelize = require('./database/db');
+/* const sequelize = require('./database/db'); */
 
 //Cargar archivos de rutas
 // const Project = require('./models/project');

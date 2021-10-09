@@ -21,12 +21,23 @@ var controller = {
                 project.company = params.company;
                 project.state = params.state;
 
-                console.log(project.state);
-
-                var response = await project.save();
+                await project.save().then(function(projectCreate){
+                    if(projectCreate){
+                        return res.status(200).send({
+                            message: "Proyectos creado correctamente",
+                            res: projectCreate
+                        });    
+                    }else{
+                        return res.status(200).send({
+                            message: "Proyectos no creado",
+                        });    
+                    } 
                 
-                return res.status(200).send({
-                    message: response
+                }, function(err){
+                    return res.status(200).send({
+                        message: "Upss! hubo un error al eliminar el proyecto",
+                        res: err
+                    });   
                 });
 
             }else{
@@ -41,37 +52,98 @@ var controller = {
             });
         }
     },
+    
     getProjects: async function(req, res){
 
-        const projects = await Project.findAll();
+        await Project.findAll().then(function(projects){
+            if(projects){
+                return res.status(200).send({
+                    message: "Proyectos obtenidos correctamente",
+                    res: projects
+                });    
+            }else{
+                return res.status(200).send({
+                    message: "Proyectos no encontrados",
+                });    
+            } 
+        
+        }, function(err){
+            return res.status(200).send({
+                message: "Upss! hubo un error al abtener los proyectos",
+                res: err
+            });   
+        });
+    },
 
-        return res.status(200).send({
-            message: projects
-        });
-    },
-    updateProject: function(req, res){
-        return res.status(200).send({
-            message: "ruta que edita los proyectos"
-        });
-    },
-    deleteProject: async function(req, res){
+    getProject: async function(req, res){
 
         var idProject = req.params.id;
 
-        let project = await Project.findOne({
+        await Project.findOne({
             where: {
               id: idProject
             }
-          });
+          }).then(function(project){ 
+            if(project){
+                return res.status(200).send({
+                    message: "Proyectos obtenidos correctamente",
+                    res: project
+                });    
+            }else{
+                return res.status(200).send({
+                    message: "Proyecto no existe",
+                });    
+            } 
+        }, function(err){
+            return res.status(200).send({
+                message: "Upss! hubo un error al obtener el proyecto",
+                res: err
+            });   
+        });
+    },
+
+    updateProject: async function(req, res){
+
+        var idProject = req.params.id;
+        var params = req.body;
+        
+        await Project.update(
+            { project_name: params.project_name },
+            { where: { id: idProject } }
+          ).then( async function(project){ 
+            if(project){
+                return res.status(200).send({
+                    message: "Proyectos actualizado correctamente",
+                    res: project
+                });    
+            }else{
+                return res.status(200).send({
+                    message: "Proyecto no actualizar",
+                });    
+            } 
+        }, function(err){
+            return res.status(200).send({
+                message: "Upss! hubo un error al actualizar el proyecto",
+                res: err
+            });   
+        });
+    },
+
+    deleteProject: async function(req, res){
+
+        var idProject = req.params.id;
        
-          project.destroy().then(function(projectDelete){ // r
+        Project.destroy({where: {id: idProject}}).then(function(projectDelete){ 
             return res.status(200).send({
                 message: "proyecto eliminado correctamente",
                 res: projectDelete
-            });    
-          }, function(err){
-              console.log(err); 
-          });
+        });    
+        }, function(err){
+            return res.status(200).send({
+                message: "Upss! hubo un error al eliminar el proyecto",
+                res: err
+            });   
+        });
     }
 };
 

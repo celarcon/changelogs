@@ -6,9 +6,10 @@ var md_auth = require('../middlewares/authenticated');
 
 var router = express.Router();
 
+router.get('/getProject/:id', ProjectController.getProject);
 router.get('/getProjects', ProjectController.getProjects);
-router.post('/createProjects', md_auth.authenticated, ProjectController.createProject);
-router.put('/updateProject', ProjectController.updateProject);
+router.post('/createProject', md_auth.authenticated, ProjectController.createProject);
+router.put('/updateProject/:id', ProjectController.updateProject);
 router.delete('/deleteProject/:id', ProjectController.deleteProject);
 
 module.exports = router;
