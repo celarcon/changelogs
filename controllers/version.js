@@ -18,18 +18,19 @@ var controller = {
             var validator_state = !validator.isEmpty(params.state);
             var validator_publisher = !validator.isEmpty(params.publisher);
 
-            if(validator_project_name && validator_company && validator_state){
-                var project = new Version();
+            if(validator_project_id && validator_version_name && validator_description && validator_state 
+                && validator_description_html && validator_version_date && validator_publisher){
+                var version = new Version();
 
-                project.project_name = params.project_name;
-                project.company = params.company;
-                project.state = params.state;
+                version.project_name = params.project_name;
+                version.company = params.company;
+                version.state = params.state;
 
-                await project.save().then(function(projectCreate){
-                    if(projectCreate){
+                await project.save().then(function(versionCreate){
+                    if(versionCreate){
                         return res.status(200).send({
                             message: "Versión creada correctamente",
-                            res: projectCreate
+                            res: versionCreate
                         });    
                     }else{
                         return res.status(200).send({
@@ -59,11 +60,11 @@ var controller = {
     
     getVersions: async function(req, res){
 
-        await Version.findAll().then(function(projects){
-            if(projects){
+        await Version.findAll().then(function(versions){
+            if(versions){
                 return res.status(200).send({
                     message: "Versiones obtenidas correctamente",
-                    res: projects
+                    res: versions
                 });    
             }else{
                 return res.status(200).send({
@@ -81,17 +82,17 @@ var controller = {
 
     getVersion: async function(req, res){
 
-        var idProject = req.params.id;
+        var idVersion = req.params.id;
 
         await Version.findOne({
             where: {
-              id: idProject
+              id: idVersion
             }
-          }).then(function(project){ 
-            if(project){
+          }).then(function(version){ 
+            if(version){
                 return res.status(200).send({
                     message: "Versión obtenida correctamente",
-                    res: project
+                    res: version
                 });    
             }else{
                 return res.status(200).send({
@@ -108,17 +109,17 @@ var controller = {
 
     updateVersion: async function(req, res){
 
-        var idProject = req.params.id;
+        var idVersion = req.params.id;
         var params = req.body;
         
         await Version.update(
-            { project_name: params.project_name },
-            { where: { id: idProject } }
-          ).then( async function(project){ 
-            if(project){
+            { version_name: params.version_name },
+            { where: { id: idVersion } }
+          ).then( async function(version){ 
+            if(version){
                 return res.status(200).send({
                     message: "Versión actualizada correctamente",
-                    res: project
+                    res: version
                 });    
             }else{
                 return res.status(200).send({
@@ -135,12 +136,12 @@ var controller = {
 
     deleteVersion: async function(req, res){
 
-        var idProject = req.params.id;
+        var idVersion = req.params.id;
        
-        await Version.destroy({where: {id: idProject}}).then(function(projectDelete){ 
+        await Version.destroy({where: {id: idVersion}}).then(function(versionDelete){ 
             return res.status(200).send({
                 message: "Versión eliminado correctamente",
-                res: projectDelete
+                res: versionDelete
         });    
         }, function(err){
             return res.status(200).send({

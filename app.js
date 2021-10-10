@@ -11,8 +11,8 @@ var app = express();
 // const Project = require('./models/project');
 var user_routes = require('./routes/user');
 var project_routes = require('./routes/project');
-/* var version_routes = require('./routes/version');
-var version_changes_routes = require('./routes/version_changes'); */
+var version_routes = require('./routes/version');
+var version_changes_routes = require('./routes/version_changes');
 
 //Middleweres
 app.use(express.urlencoded({ extended: true }));
@@ -41,8 +41,8 @@ app.get('/sequelize', (req, res)=>{
 //Reescribir rutas
 app.use('/api', user_routes);
 app.use('/api', project_routes);
-/* app.use('/api', version_routes);
-app.use('/api', version_changes_routes); */
+app.use('/api', version_routes);
+app.use('/api', version_changes_routes); 
 
 //Exportar
 module.exports = app;

@@ -15,18 +15,19 @@ var controller = {
             var validator_description_html = !validator.isEmpty(params.description_html);
             var validator_description_long = !validator.isEmpty(params.description_long);
 
-            if(validator_project_name && validator_company && validator_state){
-                var project = new VersionChanges();
+            if(validator_version_id && validator_change_name && validator_description_html && validator_description_long){
+                var versionChanges = new VersionChanges();
 
-                project.project_name = params.project_name;
-                project.company = params.company;
-                project.state = params.state;
+                versionChanges.version_id = params.version_id;
+                versionChanges.change_name = params.change_name;
+                versionChanges.description_html = params.description_html;
+                versionChanges.description_long = params.description_long;
 
-                await project.save().then(function(projectCreate){
-                    if(projectCreate){
+                await project.save().then(function(versionChangesCreate){
+                    if(versionChangesCreate){
                         return res.status(200).send({
                             message: "Versiones creado correctamente",
-                            res: projectCreate
+                            res: versionChangesCreate
                         });    
                     }else{
                         return res.status(200).send({
@@ -56,11 +57,11 @@ var controller = {
     
     getVersionsChanges: async function(req, res){
 
-        await VersionChanges.findAll().then(function(version){
-            if(version){
+        await VersionChanges.findAll().then(function(versionChanges){
+            if(versionChanges){
                 return res.status(200).send({
                     message: "Versiones obtenidos correctamente",
-                    res: version
+                    res: versionChanges
                 });    
             }else{
                 return res.status(200).send({
@@ -78,17 +79,17 @@ var controller = {
 
     getVersionChange: async function(req, res){
 
-        var idVersion = req.params.id;
+        var idVersionChanges = req.params.id;
 
         await VersionChanges.findOne({
             where: {
-              id: idVersion
+              id: idVersionChanges
             }
-          }).then(function(version){ 
-            if(version){
+          }).then(function(versionChanges){ 
+            if(versionChanges){
                 return res.status(200).send({
                     message: "Versión obtenida correctamente",
-                    res: version
+                    res: versionChanges
                 });    
             }else{
                 return res.status(200).send({
@@ -105,17 +106,17 @@ var controller = {
 
     updateVersionChanges: async function(req, res){
 
-        var idVersion = req.params.id;
+        var idVersionChanges = req.params.id;
         var params = req.body;
         
         await VersionChanges.update(
-            { project_name: params.project_name },
-            { where: { id: idVersion } }
-          ).then( async function(version){ 
-            if(version){
+            { version_name: params.version_name },
+            { where: { id: idVersionChanges } }
+          ).then( async function(versionChanges){ 
+            if(versionChanges){
                 return res.status(200).send({
                     message: "Versión actualizado correctamente",
-                    res: version
+                    res: versionChanges
                 });    
             }else{
                 return res.status(200).send({
@@ -132,12 +133,12 @@ var controller = {
 
     deleteVersionChanges: async function(req, res){
 
-        var idVersion = req.params.id;
+        var idVersionChanges = req.params.id;
        
-        await VersionChanges.destroy({where: {id: idVersion}}).then(function(versionDelete){ 
+        await VersionChanges.destroy({where: {id: idVersionChanges}}).then(function(versionChangesDelete){ 
             return res.status(200).send({
                 message: "Versión eliminada correctamente",
-                res: versionDelete
+                res: versionChangesDelete
         });    
         }, function(err){
             return res.status(200).send({

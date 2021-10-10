@@ -24,18 +24,18 @@ var controller = {
                 await project.save().then(function(projectCreate){
                     if(projectCreate){
                         return res.status(200).send({
-                            message: "Proyectos creado correctamente",
+                            message: "Proyecto creado correctamente",
                             res: projectCreate
                         });    
                     }else{
                         return res.status(200).send({
-                            message: "Proyectos no creado",
+                            message: "Proyecto no creado",
                         });    
                     } 
                 
                 }, function(err){
                     return res.status(200).send({
-                        message: "Upss! hubo un error al eliminar el proyecto",
+                        message: "Upss! hubo un error al crear el proyecto",
                         res: err
                     });   
                 });
@@ -86,7 +86,7 @@ var controller = {
           }).then(function(project){ 
             if(project){
                 return res.status(200).send({
-                    message: "Proyectos obtenidos correctamente",
+                    message: "Proyecto obtenido correctamente",
                     res: project
                 });    
             }else{
@@ -113,12 +113,12 @@ var controller = {
           ).then( async function(project){ 
             if(project){
                 return res.status(200).send({
-                    message: "Proyectos actualizado correctamente",
+                    message: "Proyecto actualizado correctamente",
                     res: project
                 });    
             }else{
                 return res.status(200).send({
-                    message: "Proyecto no actualizar",
+                    message: "Proyecto no actualizado",
                 });    
             } 
         }, function(err){
