@@ -133,7 +133,7 @@ var controller = {
 
         var idProject = req.params.id;
        
-        Project.destroy({where: {id: idProject}}).then(function(projectDelete){ 
+        await Project.destroy({where: {id: idProject}}).then(function(projectDelete){ 
             return res.status(200).send({
                 message: "proyecto eliminado correctamente",
                 res: projectDelete
