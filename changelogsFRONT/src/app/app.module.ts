@@ -12,6 +12,7 @@ import { VersionsComponent } from './components/versions/versions.component';
 import { VersionsChangesComponent } from './components/versions-changes/versions-changes.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HomeComponent } from './components/home/home.component';
+import { UserService } from './services/user.service';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { HomeComponent } from './components/home/home.component';
     routing
   ],
   providers: [
-    appRoutingProviders
+    appRoutingProviders,
+    UserService
   ],
   bootstrap: [AppComponent]
 })
