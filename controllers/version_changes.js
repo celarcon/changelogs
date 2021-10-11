@@ -15,29 +15,33 @@ var controller = {
             var validator_description_html = !validator.isEmpty(params.description_html);
             var validator_description_long = !validator.isEmpty(params.description_long);
 
+            
+
             if(validator_version_id && validator_change_name && validator_description_html && validator_description_long){
                 var versionChanges = new VersionChanges();
+
+                console.log(params.version_id + params.change_name + params.description_html + params.description_long);
 
                 versionChanges.version_id = params.version_id;
                 versionChanges.change_name = params.change_name;
                 versionChanges.description_html = params.description_html;
                 versionChanges.description_long = params.description_long;
 
-                await project.save().then(function(versionChangesCreate){
+                await versionChanges.save().then(function(versionChangesCreate){
                     if(versionChangesCreate){
                         return res.status(200).send({
-                            message: "Versiones creado correctamente",
+                            message: "Cambios en versiones creado correctamente",
                             res: versionChangesCreate
                         });    
                     }else{
                         return res.status(200).send({
-                            message: "Versiones no creado",
+                            message: "Cambios en versiones no creado",
                         });    
                     } 
                 
                 }, function(err){
                     return res.status(200).send({
-                        message: "Upss! hubo un error al eliminar la versión",
+                        message: "Upss! hubo un error al eliminar el cambio versión",
                         res: err
                     });   
                 });
@@ -50,7 +54,8 @@ var controller = {
 
         }catch(err){
             return res.status(200).send({
-                message: 'faltan datos por entregar'
+                message: 'faltan datos por entregar',
+                error: err
             });
         }
     },
@@ -60,18 +65,18 @@ var controller = {
         await VersionChanges.findAll().then(function(versionChanges){
             if(versionChanges){
                 return res.status(200).send({
-                    message: "Versiones obtenidos correctamente",
+                    message: "Cambios en versiones obtenidos correctamente",
                     res: versionChanges
                 });    
             }else{
                 return res.status(200).send({
-                    message: "Versiones no encontrados",
+                    message: "Cambios en versiones no encontrados",
                 });    
             } 
         
         }, function(err){
             return res.status(200).send({
-                message: "Upss! hubo un error al abtener las versiones",
+                message: "Upss! hubo un error al abtener las Cambios en versiones",
                 res: err
             });   
         });
@@ -88,17 +93,17 @@ var controller = {
           }).then(function(versionChanges){ 
             if(versionChanges){
                 return res.status(200).send({
-                    message: "Versión obtenida correctamente",
+                    message: "Cambios en versión obtenida correctamente",
                     res: versionChanges
                 });    
             }else{
                 return res.status(200).send({
-                    message: "Versión no existe",
+                    message: "Cambios en versión no existe",
                 });    
             } 
         }, function(err){
             return res.status(200).send({
-                message: "Upss! hubo un error al obtener la versión",
+                message: "Upss! hubo un error al obtener la Cambios en versión",
                 res: err
             });   
         });
@@ -110,22 +115,26 @@ var controller = {
         var params = req.body;
         
         await VersionChanges.update(
-            { version_name: params.version_name },
+            {   version_id: params.version_id,
+                change_name: params.change_name,
+                description_html: params.description_html,
+                description_long: params.description_html
+            },
             { where: { id: idVersionChanges } }
           ).then( async function(versionChanges){ 
             if(versionChanges){
                 return res.status(200).send({
-                    message: "Versión actualizado correctamente",
+                    message: "Cambios en versión actualizado correctamente",
                     res: versionChanges
                 });    
             }else{
                 return res.status(200).send({
-                    message: "Versión no actualizar",
+                    message: "Cambios en versión no actualizado",
                 });    
             } 
         }, function(err){
             return res.status(200).send({
-                message: "Upss! hubo un error al actualizar la Versión",
+                message: "Upss! hubo un error al actualizar la Cambios en versión",
                 res: err
             });   
         });
@@ -137,12 +146,12 @@ var controller = {
        
         await VersionChanges.destroy({where: {id: idVersionChanges}}).then(function(versionChangesDelete){ 
             return res.status(200).send({
-                message: "Versión eliminada correctamente",
+                message: "Cambios en versión eliminada correctamente",
                 res: versionChangesDelete
         });    
         }, function(err){
             return res.status(200).send({
-                message: "Upss! hubo un error al eliminar la lersión",
+                message: "Upss! hubo un error al eliminar el cambio en versión",
                 res: err
             });   
         });

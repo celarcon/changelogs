@@ -108,7 +108,10 @@ var controller = {
         var params = req.body;
         
         await Project.update(
-            { project_name: params.project_name },
+            {   project_name: params.project_name,
+                company: params.company,
+                state: params.state
+             },
             { where: { id: idProject } }
           ).then( async function(project){ 
             if(project){

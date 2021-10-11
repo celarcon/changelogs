@@ -8,7 +8,7 @@ var router = express.Router();
 
 router.get('/getVersion/:id', VersionController.getVersion);
 router.get('/getVersions', VersionController.getVersions);
-router.post('/createVersion', md_auth.authenticated, VersionController.createVersion);
+router.post('/createVersion', VersionController.createVersion);
 router.put('/updateVersion/:id', VersionController.updateVersion);
 router.delete('/deleteVersion/:id', VersionController.deleteVersion);
 

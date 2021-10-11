@@ -22,11 +22,15 @@ var controller = {
                 && validator_description_html && validator_version_date && validator_publisher){
                 var version = new Version();
 
-                version.project_name = params.project_name;
-                version.company = params.company;
+                version.project_id = params.project_id;
+                version.version_name = params.version_name;
+                version.description = params.description;
+                version.description_html = params.description_html;
+                version.version_date = params.version_date;
                 version.state = params.state;
+                version.publisher = params.publisher;
 
-                await project.save().then(function(versionCreate){
+                await version.save().then(function(versionCreate){
                     if(versionCreate){
                         return res.status(200).send({
                             message: "Versión creada correctamente",
@@ -113,7 +117,14 @@ var controller = {
         var params = req.body;
         
         await Version.update(
-            { version_name: params.version_name },
+            {   project_id: params.project_id,
+                version_name: params.version_name,
+                description: params.description,
+                description_html: params.description_html,
+                version_date: params.version_date,
+                state: params.state,
+                publisher: params.publisher,
+            },
             { where: { id: idVersion } }
           ).then( async function(version){ 
             if(version){
