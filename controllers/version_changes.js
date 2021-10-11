@@ -113,28 +113,59 @@ var controller = {
 
         var idVersionChanges = req.params.id;
         var params = req.body;
-        
-        await VersionChanges.update(
-            {   version_id: params.version_id,
-                change_name: params.change_name,
-                description_html: params.description_html,
-                description_long: params.description_html
-            },
-            { where: { id: idVersionChanges } }
-          ).then( async function(versionChanges){ 
+
+        await VersionChanges.findOne({
+            where: {
+              id: idVersionChanges
+            }
+          }).then( async function(versionChanges){ 
             if(versionChanges){
-                return res.status(200).send({
-                    message: "Cambios en versión actualizado correctamente",
-                    res: versionChanges
-                });    
+
+                if(!validator.isEmpty(params.version_id)){
+                    versionChanges.version_id = params.version_id;
+                }
+                if(!validator.isEmpty(params.change_name)){
+                    versionChanges.change_name = params.change_name;
+                }
+                if(!validator.isEmpty(params.description_html)){
+                    versionChanges.description_html = params.description_html;
+                }
+                if(!validator.isEmpty(params.description_long)){
+                    versionChanges.description_long = params.description_long;
+                }
+
+                await VersionChanges.update(
+                    {   version_id: versionChanges.version_id,
+                        change_name: versionChanges.change_name,
+                        description_html: versionChanges.description_html,
+                        description_long: versionChanges.description_html
+                    },
+                    { where: { id: idVersionChanges } }
+                  ).then( async function(versionChanges){ 
+                    if(versionChanges){
+                        return res.status(200).send({
+                            message: "Cambios en versión actualizado correctamente",
+                            res: versionChanges
+                        });    
+                    }else{
+                        return res.status(200).send({
+                            message: "Cambios en versión no actualizado",
+                        });    
+                    } 
+                }, function(err){
+                    return res.status(200).send({
+                        message: "Upss! hubo un error al actualizar la Cambios en versión",
+                        res: err
+                    });   
+                });
             }else{
                 return res.status(200).send({
-                    message: "Cambios en versión no actualizado",
+                    message: "Cambios en versión no existe",
                 });    
             } 
         }, function(err){
             return res.status(200).send({
-                message: "Upss! hubo un error al actualizar la Cambios en versión",
+                message: "Upss! hubo un error al obtener la Cambios en versión",
                 res: err
             });   
         });

@@ -107,26 +107,52 @@ var controller = {
         var idProject = req.params.id;
         var params = req.body;
         
-        await Project.update(
-            {   project_name: params.project_name,
-                company: params.company,
-                state: params.state
-             },
-            { where: { id: idProject } }
-          ).then( async function(project){ 
+        await Project.findOne({
+            where: {
+              id: idProject
+            }
+          }).then( async function(project){ 
             if(project){
-                return res.status(200).send({
-                    message: "Proyecto actualizado correctamente",
-                    res: project
-                });    
+                if(!validator.isEmpty(params.project_name)){
+                    project.project_name = params.project_name;
+                }
+                if(!validator.isEmpty(params.company)){
+                    project.company = params.company;
+                }
+                if(!validator.isEmpty(params.state)){
+                    project.state = params.state;
+                }
+                await Project.update(
+                    {   project_name: project.project_name,
+                        company: project.company,
+                        state: project.state
+                     },
+                    { where: { id: idProject } }
+                  ).then( async function(project){ 
+                    if(project){
+                        return res.status(200).send({
+                            message: "Proyecto actualizado correctamente",
+                            res: project
+                        });    
+                    }else{
+                        return res.status(200).send({
+                            message: "Proyecto no actualizado",
+                        });    
+                    } 
+                }, function(err){
+                    return res.status(200).send({
+                        message: "Upss! hubo un error al actualizar el proyecto",
+                        res: err
+                    });   
+                });
             }else{
                 return res.status(200).send({
-                    message: "Proyecto no actualizado",
+                    message: "Proyecto no existe",
                 });    
             } 
         }, function(err){
             return res.status(200).send({
-                message: "Upss! hubo un error al actualizar el proyecto",
+                message: "Upss! hubo un error al obtener el proyecto",
                 res: err
             });   
         });

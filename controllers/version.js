@@ -116,30 +116,70 @@ var controller = {
         var idVersion = req.params.id;
         var params = req.body;
         
-        await Version.update(
-            {   project_id: params.project_id,
-                version_name: params.version_name,
-                description: params.description,
-                description_html: params.description_html,
-                version_date: params.version_date,
-                state: params.state,
-                publisher: params.publisher,
-            },
-            { where: { id: idVersion } }
-          ).then( async function(version){ 
+        await Version.findOne({
+            where: {
+              id: idVersion
+            }
+          }).then( async function(version){ 
             if(version){
-                return res.status(200).send({
-                    message: "Versión actualizada correctamente",
-                    res: version
-                });    
+
+                if(!validator.isEmpty(params.project_id)){
+                    version.project_id = params.project_id;
+                }
+                if(!validator.isEmpty(params.version_name)){
+                    version.version_name = params.version_name;
+                }
+                if(!validator.isEmpty(params.description)){
+                    version.description = params.description;
+                }
+                if(!validator.isEmpty(params.description_html)){
+                    version.description_html = params.description_html;
+                }
+                if(!validator.isEmpty(params.version_date)){
+                    version.version_date = params.version_date;
+                }
+                if(!validator.isEmpty(params.state)){
+                    version.state = params.state;
+                }
+                if(!validator.isEmpty(params.publisher)){
+                    version.publisher = params.publisher;
+                }
+
+                await Version.update(
+                    {   project_id: version.project_id,
+                        version_name: version.version_name,
+                        description: version.description,
+                        description_html: version.description_html,
+                        version_date: version.version_date,
+                        state: version.state,
+                        publisher: version.publisher,
+                    },
+                    { where: { id: idVersion } }
+                  ).then( async function(version){ 
+                    if(version){
+                        return res.status(200).send({
+                            message: "Versión actualizada correctamente",
+                            res: version
+                        });    
+                    }else{
+                        return res.status(200).send({
+                            message: "Versión no actualizada",
+                        });    
+                    } 
+                }, function(err){
+                    return res.status(200).send({
+                        message: "Upss! hubo un error al actualizar la versión",
+                        res: err
+                    });   
+                });
             }else{
                 return res.status(200).send({
-                    message: "Versión no actualizada",
+                    message: "Versión no existe",
                 });    
             } 
         }, function(err){
             return res.status(200).send({
-                message: "Upss! hubo un error al actualizar la versión",
+                message: "Upss! hubo un error al obtener la versión",
                 res: err
             });   
         });
