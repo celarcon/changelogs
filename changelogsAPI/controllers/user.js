@@ -34,7 +34,7 @@ var controller = {
                 });
             }else{
                 return res.status(500).send({
-                    message: "el usuario ya exite"
+                    message: "el usuario ya existe"
                 });
             }
 
@@ -66,8 +66,9 @@ var controller = {
 
                 bcrypt.compare(params.password, user.password, (err, check) =>{
                     if(check){
-                        return  res.status(500).send({
-                            token: jwt.createToken(user)
+                        return  res.status(200).send({
+                            token: jwt.createToken(user),
+                            user: user
                         });
                     }else{
                         return  res.status(500).send({

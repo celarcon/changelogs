@@ -15,7 +15,6 @@ var controller = {
             var validator_description_html = !validator.isEmpty(params.description_html);
             var validator_description_long = !validator.isEmpty(params.description_long);
 
-            
 
             if(validator_version_id && validator_change_name && validator_description_html && validator_description_long){
                 var versionChanges = new VersionChanges();

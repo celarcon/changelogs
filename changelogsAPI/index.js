@@ -13,27 +13,3 @@ app.listen(PORT, function(){
         console.log(err);
     })
 });
-
-/* Para MYSQL sin sequelize */
-
-/* conenection.connect(function(err){
-    if(err){
-        throw err;
-    }else{
-        app.listen(port,() => {
-            console.log('el servidor esta funcionando');
-        });
-    }
-}); */
-
-/* conenection.query('SELECT * FROM project', function(err, res, req){
-    if(err){
-        throw err;
-    }else{
-        res.forEach(result => {
-            console.log(result);
-        });
-    }
-}); */
-
-/* conenection.end(); */
