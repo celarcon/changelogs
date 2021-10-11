@@ -8,8 +8,8 @@ var router = express.Router();
 
 router.get('/getVersionChanges/:id', VersionChangesController.getVersionChange);
 router.get('/getVersionsChanges', VersionChangesController.getVersionsChanges);
-router.post('/createVersionChanges', VersionChangesController.createVersionChanges);
-router.put('/updateVersionChanges/:id', VersionChangesController.updateVersionChanges);
-router.delete('/deleteVersionChanges/:id', VersionChangesController.deleteVersionChanges);
+router.post('/createVersionChanges', md_auth.authenticated, VersionChangesController.createVersionChanges);
+router.put('/updateVersionChanges/:id', md_auth.authenticated, VersionChangesController.updateVersionChanges);
+router.delete('/deleteVersionChanges/:id', md_auth.authenticated, VersionChangesController.deleteVersionChanges);
 
 module.exports = router;

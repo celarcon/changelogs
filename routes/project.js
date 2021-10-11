@@ -9,7 +9,7 @@ var router = express.Router();
 router.get('/getProject/:id', ProjectController.getProject);
 router.get('/getProjects', ProjectController.getProjects);
 router.post('/createProject', md_auth.authenticated, ProjectController.createProject);
-router.put('/updateProject/:id', ProjectController.updateProject);
-router.delete('/deleteProject/:id', ProjectController.deleteProject);
+router.put('/updateProject/:id', md_auth.authenticated, ProjectController.updateProject);
+router.delete('/deleteProject/:id', md_auth.authenticated, ProjectController.deleteProject);
 
 module.exports = router;
