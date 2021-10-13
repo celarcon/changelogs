@@ -1,3 +1,28 @@
 <app-navbar></app-navbar>
 
-<p>versions works!</p>
+<div class="container">
+    <div class="row">
+        <div class="col-12 mt-4 mb-3">
+            <button class="btn btn-outline-primary float-end">CREAR VERSIÓN</button>
+        </div>
+    </div>
+    <div class="row">
+        <div *ngFor="let version of versions;" class="col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title mb-3">{{version.version_name}}</h5>
+                    <p class="card-text m-0">Compañía: {{version.version_date}}</p>
+                    <p class="card-text">estado:
+                        <span *ngIf="version.state == 0">
+                            activo
+                        </span>
+                        <span *ngIf="version.state == 1">
+                            inactivo
+                        </span>
+                    </p>
+                    <a class="btn btn-primary"  (click)="viewVersions(version.id, version.id)">Ver cambios en versiones</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

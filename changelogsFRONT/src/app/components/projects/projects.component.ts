@@ -39,8 +39,7 @@ export class ProjectsComponent implements OnInit {
       ); 
     }
 
-    viewVersion(): void{
-      console.log("hola");
-      this._router.navigate(['/versions/'+1]);
+    viewVersions(idProject: any): void{
+      this._router.navigate(['project/'+idProject+'/versions']);
     }
 }

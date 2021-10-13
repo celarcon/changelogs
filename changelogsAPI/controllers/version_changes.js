@@ -61,7 +61,16 @@ var controller = {
     
     getVersionsChanges: async function(req, res){
 
-        await VersionChanges.findAll().then(function(versionChanges){
+        var idProject = req.params.idProject;
+        var idVersion = req.params.idVersion;
+
+        await VersionChanges.findAll(
+            {
+                where: {
+                    version_id: idVersion
+                }
+            }
+        ).then(function(versionChanges){
             if(versionChanges){
                 return res.status(200).send({
                     message: "Cambios en versiones obtenidos correctamente",

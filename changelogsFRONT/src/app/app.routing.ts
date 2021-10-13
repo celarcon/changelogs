@@ -16,7 +16,8 @@ const appRoutes: Routes = [
     {path:'project/:idProject', component: ProjectsComponent},
     {path:'project/:idProject/versions', component: VersionsComponent},
     {path:'project/:idProject/version/:idVersion', component: VersionsComponent},
-    {path:'versionsChanges', component: VersionsChangesComponent},
+    {path:'project/:idProject/version/:idVersion/versionsChanges', component: VersionsChangesComponent},
+    {path:'project/:idProject/version/:idVersion/versionsChange/:idVersionChanges', component: VersionsChangesComponent},
     {path:'**', component: LoginComponent}
 ];
 

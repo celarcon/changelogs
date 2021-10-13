@@ -12,18 +12,18 @@ export class VersionService{
         this.url = global.url;
     }
 
-    getVersions(): Observable<any>{
+    getVersions(idProject: number): Observable<any>{
         
         let headers = new HttpHeaders().set('Content-type', 'application/json');
 
-        return this._http.get(this.url+'projects', {headers: headers});
+        return this._http.get(this.url+'project/'+idProject+'/versions', {headers: headers});
     }
 
     getVersion(): Observable<any>{
         
         let headers = new HttpHeaders().set('Content-type', 'application/json');
 
-        return this._http.get(this.url+'project/1/versions', {headers: headers});
+        return this._http.get(this.url+'project/1/version/1', {headers: headers});
     }
 
     setVersion(project: any): Observable<any>{

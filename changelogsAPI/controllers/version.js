@@ -125,7 +125,7 @@ var controller = {
 
     updateVersion: async function(req, res){
 
-        var idVersion = req.params.id;
+        var idVersion = req.params.idVersion;
         var params = req.body;
         
         await Version.findOne({
@@ -199,7 +199,7 @@ var controller = {
 
     deleteVersion: async function(req, res){
 
-        var idVersion = req.params.id;
+        var idVersion = req.params.idVersion;
        
         await Version.destroy({where: {id: idVersion}}).then(function(versionDelete){ 
             return res.status(200).send({
