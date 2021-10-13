@@ -6,8 +6,8 @@ var md_auth = require('../middlewares/authenticated');
 
 var router = express.Router();
 
-router.get('/getProject/:id', ProjectController.getProject);
-router.get('/getProjects', ProjectController.getProjects);
+router.get('/project/:id', ProjectController.getProject);
+router.get('/projects', ProjectController.getProjects);
 router.post('/createProject', md_auth.authenticated, ProjectController.createProject);
 router.put('/updateProject/:id', md_auth.authenticated, ProjectController.updateProject);
 router.delete('/deleteProject/:id', md_auth.authenticated, ProjectController.deleteProject);

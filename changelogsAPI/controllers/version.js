@@ -64,7 +64,17 @@ var controller = {
     
     getVersions: async function(req, res){
 
-        await Version.findAll().then(function(versions){
+        var idProject = req.params.idProject;
+
+        console.log(idProject);
+
+        await Version.findAll(
+            {
+                where: {
+                    project_id: idProject
+                }
+            }
+        ).then(function(versions){
             if(versions){
                 return res.status(200).send({
                     message: "Versiones obtenidas correctamente",
@@ -86,11 +96,13 @@ var controller = {
 
     getVersion: async function(req, res){
 
-        var idVersion = req.params.id;
+        var idVersion = req.params.idVersion;
+        var idProject = req.params.idProject;
 
         await Version.findOne({
             where: {
-              id: idVersion
+              id: idVersion,
+              project_id: idProject
             }
           }).then(function(version){ 
             if(version){
