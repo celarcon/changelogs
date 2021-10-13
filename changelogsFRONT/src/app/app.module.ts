@@ -13,6 +13,8 @@ import { VersionsChangesComponent } from './components/versions-changes/versions
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HomeComponent } from './components/home/home.component';
 import { UserService } from './services/user.service';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,9 @@ import { UserService } from './services/user.service';
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    routing
+    routing,
+    FontAwesomeModule,
+    NgbModule
   ],
   providers: [
     appRoutingProviders,

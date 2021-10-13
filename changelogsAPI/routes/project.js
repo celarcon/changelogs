@@ -8,8 +8,8 @@ var router = express.Router();
 
 router.get('/project/:id', ProjectController.getProject);
 router.get('/projects', ProjectController.getProjects);
-router.post('/createProject', md_auth.authenticated, ProjectController.createProject);
-router.put('/updateProject/:id', md_auth.authenticated, ProjectController.updateProject);
-router.delete('/deleteProject/:id', md_auth.authenticated, ProjectController.deleteProject);
+router.post('/project', md_auth.authenticated, ProjectController.createProject);
+router.put('/project/:id', md_auth.authenticated, ProjectController.updateProject);
+router.delete('/project/:id', md_auth.authenticated, ProjectController.deleteProject);
 
 module.exports = router;

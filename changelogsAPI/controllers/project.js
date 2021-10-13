@@ -107,6 +107,9 @@ var controller = {
         var idProject = req.params.id;
         var params = req.body;
         
+        console.log(idProject);
+        console.log(params);
+        
         await Project.findOne({
             where: {
               id: idProject
@@ -119,7 +122,7 @@ var controller = {
                 if(!validator.isEmpty(params.company)){
                     project.company = params.company;
                 }
-                if(!validator.isEmpty(params.state)){
+                if(params.state == 1 || params.state == 0){
                     project.state = params.state;
                 }
                 await Project.update(

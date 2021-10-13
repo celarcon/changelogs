@@ -38,7 +38,6 @@ export class LoginComponent implements OnInit {
       (response) => {
         console.log(response);
         if (response.user && response.user.id) {
-          console.log("hola2");
           this.identity = response.user;
           localStorage.setItem('identity', JSON.stringify(this.identity));
 
@@ -46,7 +45,6 @@ export class LoginComponent implements OnInit {
             response=>{
               console.log(response);
               if(response.token){
-                console.log(response);
                 this.token = response.token;
                 localStorage.setItem('token', JSON.stringify(this.token));
 

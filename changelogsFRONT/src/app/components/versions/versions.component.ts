@@ -41,7 +41,7 @@ export class VersionsComponent implements OnInit {
   }
 
   viewVersions(idProject: any, idVersion: any): void{
-    this._router.navigate(['project/'+idProject+'/version/'+idVersion]);
+    this._router.navigate(['project/'+idProject+'/version/'+idVersion+"/versionsChanges"]);
   }
 
 }
