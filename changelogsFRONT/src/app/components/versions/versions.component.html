@@ -1,17 +1,31 @@
 <app-navbar></app-navbar>
 
 <div class="container">
+    <div class="row m-3">
+        <h1>Proyecto: {{project.project_name}}</h1>
+        <h2>Compañía: {{project.company}} </h2>
+        <h2>Estado: 
+            <span *ngIf="project.state == 0">Activo</span>
+            <span *ngIf="project.state == 1">Inactivo</span>
+        </h2>
+    </div>
     <div class="row">
         <div class="col-12 mt-4 mb-3">
-            <button class="btn btn-outline-primary float-end">CREAR VERSIÓN</button>
+            <button class="btn btn-outline-primary float-end" (click)="create(createContent)">CREAR VERSIÓN</button>
         </div>
     </div>
     <div class="row">
         <div *ngFor="let version of versions;" class="col-sm-6">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title mb-3">{{version.version_name}}</h5>
-                    <p class="card-text m-0">Compañía: {{version.version_date}}</p>
+                    <h5 class="card-title mb-3">{{version.version_name}}
+                        <fa-icon (click)="deleteProject(version.id)" [icon]="faTrash" style="float: right;"></fa-icon>
+                        <fa-icon (click)="edit(editContent, version.id)" [icon]="faPen"
+                            style="float: right; margin-right: 5px;"></fa-icon>
+                    </h5>
+                    <p class="card-text m-0">Descripción: {{version.description}}</p>
+                    <p class="card-text m-0">Descripción html: {{version.description_html}}</p>
+                    <p class="card-text m-0">Fecha: {{version.version_date}}</p>
                     <p class="card-text">estado:
                         <span *ngIf="version.state == 0">
                             activo
@@ -20,9 +34,80 @@
                             inactivo
                         </span>
                     </p>
+                    <p class="card-text">Autor: {{version.publisher}}</p>
                     <a class="btn btn-primary"  (click)="viewVersions(version.id, version.id)">Ver cambios en versiones</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<!-- MODAL EDIT -->
+
+<ng-template #editContent let-c="close" let-d="dismiss">
+    <form>
+        <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">EDITA EL PROYECTO</h4>
+            <button type="button" style="background: none; outline:none; border: none;" aria-label="Close"
+                (click)="d('Cross click')">
+                <fa-icon [icon]="faTimes"></fa-icon>
+            </button>
+        </div>
+        <div class="modal-body">
+
+            <div class="form-group row">
+                <label class="col-6">Nombre del proyecto</label>
+                <input class="col-6" type="text" name="name" #name="ngModel" [(ngModel)]="project.project_name">
+            </div>
+            <div class="form-group row mt-3">
+                <label class="col-6">Compañía</label>
+                <input class="col-6" type="text" name="company" #company="ngModel" [(ngModel)]="project.company">
+            </div>
+            <div class="form-group row mt-3">
+                <label class="col-6">Estado</label>
+                <select class="col-6" name="state" #state="ngModel" [(ngModel)]="project.state">
+                    <option value="0">Activo</option>
+                    <option value="1">Inactivo</option>
+                </select>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <input value="EDITAR" type="button" class="btn btn-outline-dark" (click)="editProject()">
+        </div>
+    </form>
+</ng-template>
+
+<!-- MODAL CREATE PROJECT-->
+
+<ng-template #createContent let-c="close" let-d="dismiss">
+    <form #createForm="ngForm" (ngSubmit)="createProject(createForm)">
+        <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">CREAR UN NUEVO PROYECTO</h4>
+            <button type="button" style="background: none; outline:none; border: none;" aria-label="Close"
+                (click)="d('Cross click')">
+                <fa-icon [icon]="faTimes"></fa-icon>
+            </button>
+        </div>
+        <div class="modal-body m-3">
+            <div class="form-group row">
+                <label class="col-6">Nombre del proyecto</label>
+                <input class="col-6" type="text" name="project_name"  ngModel required>
+            </div>
+            <div class="form-group row mt-3">
+                <label class="col-6">Compañía</label>
+                <input class="col-6" type="text" name="company" ngModel required>
+            </div>
+            <div class="form-group row mt-3">
+                <label class="col-6">Estado</label>
+                <select class="col-6" name="state" ngModel required>
+                    <option value="0">Activo</option>
+                    <option value="1">Inactivo</option>
+                </select>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <input type="submit" class="btn btn-outline-dark" value="CREAR">
+        </div>
+    </form>
+</ng-template>
