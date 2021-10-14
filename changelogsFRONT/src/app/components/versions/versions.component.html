@@ -19,7 +19,7 @@
         </div>
     </div>
     <div class="row">
-        <div *ngFor="let version of versions;" class="col-sm-6 mt-2">
+        <div *ngFor="let version of versions; let i=index;" class="col-sm-6 mt-2">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title mb-3"><strong>{{version.version_name}}</strong>
@@ -41,6 +41,9 @@
                     <a class="btn btn-primary"  (click)="viewChangeVersions(project.id, version.id)">Ver cambios en versiones</a>
                 </div>
             </div>
+        </div>
+        <div *ngIf="versions?.length == 0" class="m-4">
+            <h2>No hay versiones en este proyecto</h2>
         </div>
     </div>
 </div>
