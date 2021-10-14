@@ -47,7 +47,6 @@ export class ProjectsComponent implements OnInit {
           );
           this.projects.push(tempProject);
         }
-        console.log(this.projects);
       },
       (error) => {
         this.status = 'error';
@@ -91,7 +90,6 @@ export class ProjectsComponent implements OnInit {
     if (projectForm.valid) {
       this._projectService.setProject(projectForm.value).subscribe(
         (response) => {
-          console.log(response);
           this.getAllProjects();
         },
         (error) => {

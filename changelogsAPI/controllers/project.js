@@ -107,9 +107,6 @@ var controller = {
         var idProject = req.params.id;
         var params = req.body;
         
-        console.log(idProject);
-        console.log(params);
-        
         await Project.findOne({
             where: {
               id: idProject

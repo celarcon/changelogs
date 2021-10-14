@@ -16,7 +16,7 @@ export class VersionService{
     }
 
     getVersions(idProject: number): Observable<any>{
-        console.log(idProject);
+
         let headers = new HttpHeaders().set('Content-type', 'application/json');
 
         return this._http.get(this.url+'project/'+idProject+'/versions', {headers: headers});

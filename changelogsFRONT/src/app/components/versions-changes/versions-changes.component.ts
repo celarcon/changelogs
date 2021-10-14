@@ -61,8 +61,6 @@ export class VersionsChangesComponent implements OnInit {
             let tempVersion = new VersionChanges(vers.id, vers.version_id, vers.change_name, vers.description_html, vers.description_long); 
             this.versionsChanges.push(tempVersion); 
           }
-
-          console.log(this.versionsChanges);
       },
       (error) => {
         this.status = 'error';
@@ -83,7 +81,6 @@ export class VersionsChangesComponent implements OnInit {
           versChangs.description_html,
           versChangs.description_long,
         );
-        console.log(this.versionChanges);
       },
       (error) => {
         this.status = 'error';
@@ -107,7 +104,6 @@ export class VersionsChangesComponent implements OnInit {
           vers.state,
           vers.publisher
         );
-        console.log(this.version);
       },
       (error) => {
         this.status = 'error';
@@ -147,7 +143,6 @@ export class VersionsChangesComponent implements OnInit {
     if (projectForm.valid) {
       this._versionChangesService.setVersionChanges(idProject, idVersion, projectForm.value).subscribe(
         (response) => {
-          console.log(response);
           this.getAllVersionsChanges();
         },
         (error) => {

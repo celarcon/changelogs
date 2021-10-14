@@ -67,8 +67,6 @@ var controller = {
 
         var idProject = req.params.idProject;
 
-        console.log(idProject);
-
         await Version.findAll(
             {
                 where: {

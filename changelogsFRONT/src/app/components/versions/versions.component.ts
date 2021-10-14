@@ -52,8 +52,6 @@ export class VersionsComponent implements OnInit {
             let tempVersion = new Version(vers.id, vers.project_id, vers.version_name, vers.description, vers.description_html,vers.version_date,vers.state,vers.publisher); 
             this.versions.push(tempVersion); 
           }
-
-          console.log(this.versions);
       },
       (error) => {
         this.status = 'error';
@@ -94,7 +92,6 @@ export class VersionsComponent implements OnInit {
           vers.state,
           vers.publisher
         );
-        console.log(this.version);
       },
       (error) => {
         this.status = 'error';
@@ -120,7 +117,6 @@ export class VersionsComponent implements OnInit {
     if (projectForm.valid) {
       this._versionService.setVersion(idProject, projectForm.value).subscribe(
         (response) => {
-          console.log(response);
           this.getAllVersions();
         },
         (error) => {

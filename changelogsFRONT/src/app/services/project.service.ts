@@ -36,8 +36,6 @@ export class ProjectService{
         
         let params = JSON.stringify(project);
 
-        console.log(params);
-
         return this._http.post(this.url+'project', params, {headers: headers});
     }
     
