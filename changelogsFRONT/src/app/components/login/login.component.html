@@ -1,22 +1,33 @@
-<div class="container text-center ">
-    <div>
-        <h2>{{title}}</h2>
+<div id="wrapper">
+    <div id="contenedor">
+        <div id="contenido">
+            <div class="container text-center">
+                <div class="mb-5">
+                    <h1>CHANGE LOGS</h1>
+                </div>
+                <div class="mb-2">
+                    <h2>{{title}}</h2>
+                </div>
+                <form class="row" #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
+                    <div class="form-group mb-3">
+                        <label for="name" class="mb-2">
+                            Nombre
+                        </label>
+                        <input type="text" name="name" #name="ngModel" [(ngModel)]="user.name" value=""
+                            class="form-control" placeholder="" />
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="password" class="mb-2">
+                            Contraseña:
+                        </label>
+                        <input type="password" name="password" #password="ngModel" [(ngModel)]="user.password" value=""
+                            class="form-control" placeholder="" />
+                    </div>
+                    <div class="form-group mt-3">
+                        <input type="submit" class="btn btn-primary w-100" value="Acceder">
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-    <form  #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)" >
-        <div class="form-group">
-            <label for="name" >
-                Nombre
-            </label>
-            <input type="text" name="name" #name="ngModel" [(ngModel)]="user.name" value="" class="form-control" placeholder="" />
-        </div>
-        <div class="form-group">
-            <label for="password" >
-                Repita la clave:
-            </label>
-            <input type="password" name="password" #password="ngModel" [(ngModel)]="user.password" value="" class="form-control" placeholder="" />
-        </div>
-        <div class="form-group">
-            <input type="submit" class="btn btn-primary" value="Acceder">
-        </div>
-    </form>
 </div>

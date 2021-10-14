@@ -1,0 +1,19 @@
+
+#wrapper{
+    height:100%;
+    width:100%;
+    display:table;
+    overflow:hidden;
+}
+
+#contenedor{
+    display:table-cell;
+    width:100%;
+    vertical-align:middle;
+    text-align:center;
+}
+
+#contenido{
+    display:inline-block;
+    margin:0 auto;
+}

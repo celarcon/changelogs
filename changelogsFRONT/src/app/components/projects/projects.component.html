@@ -11,9 +11,8 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title mb-3">{{project.project_name}}
-                        <fa-icon (click)="deleteProject(project.id)" [icon]="faTrash" style="float: right;"></fa-icon>
-                        <fa-icon (click)="edit(editContent, project.id)" [icon]="faPen"
-                            style="float: right; margin-right: 5px;"></fa-icon>
+                        <fa-icon (click)="deleteProject(project.id)" [icon]="faTrash" class="delete"></fa-icon>
+                        <fa-icon (click)="edit(editContent, project.id)" [icon]="faPen" class="edit"></fa-icon>
                     </h5>
                     <p class="card-text m-0">Compañía: {{project.company}}</p>
                     <p class="card-text">estado:

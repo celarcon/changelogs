@@ -20,9 +20,8 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title mb-3">{{version.version_name}}
-                        <fa-icon (click)="deleteVersion(project.id, version.id)" [icon]="faTrash" style="float: right;"></fa-icon>
-                        <fa-icon (click)="edit(editContent, version.id)" [icon]="faPen"
-                            style="float: right; margin-right: 5px;"></fa-icon>
+                        <fa-icon (click)="deleteVersion(project.id, version.id)" [icon]="faTrash" class="delete" ></fa-icon>
+                        <fa-icon (click)="edit(editContent, version.id)" [icon]="faPen" class="edit"></fa-icon>
                     </h5>
                     <p class="card-text m-0"><strong>Descripción: </strong> {{version.description}}</p>
                     <p class="card-text m-0"><strong>Descripción html: </strong> {{version.description_html}}</p>
