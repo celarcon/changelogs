@@ -8,9 +8,10 @@ var controller = {
     createVersionChanges:async function(req, res){
 
         var params = req.body;
+        var idVersion = req.params.idVersion;
 
         try{
-            var validator_version_id = !validator.isEmpty(params.version_id);
+            var validator_version_id = !validator.isEmpty(idVersion);
             var validator_change_name = !validator.isEmpty(params.change_name);
             var validator_description_html = !validator.isEmpty(params.description_html);
             var validator_description_long = !validator.isEmpty(params.description_long);
@@ -19,9 +20,7 @@ var controller = {
             if(validator_version_id && validator_change_name && validator_description_html && validator_description_long){
                 var versionChanges = new VersionChanges();
 
-                console.log(params.version_id + params.change_name + params.description_html + params.description_long);
-
-                versionChanges.version_id = params.version_id;
+                versionChanges.version_id = idVersion;
                 versionChanges.change_name = params.change_name;
                 versionChanges.description_html = params.description_html;
                 versionChanges.description_long = params.description_long;
@@ -92,7 +91,7 @@ var controller = {
 
     getVersionChange: async function(req, res){
 
-        var idVersionChanges = req.params.id;
+        var idVersionChanges = req.params.idVersionChanges;
 
         await VersionChanges.findOne({
             where: {
@@ -119,7 +118,7 @@ var controller = {
 
     updateVersionChanges: async function(req, res){
 
-        var idVersionChanges = req.params.id;
+        var idVersionChanges = req.params.idVersionChanges;
         var params = req.body;
 
         await VersionChanges.findOne({
@@ -129,9 +128,6 @@ var controller = {
           }).then( async function(versionChanges){ 
             if(versionChanges){
 
-                if(!validator.isEmpty(params.version_id)){
-                    versionChanges.version_id = params.version_id;
-                }
                 if(!validator.isEmpty(params.change_name)){
                     versionChanges.change_name = params.change_name;
                 }
@@ -143,8 +139,7 @@ var controller = {
                 }
 
                 await VersionChanges.update(
-                    {   version_id: versionChanges.version_id,
-                        change_name: versionChanges.change_name,
+                    {   change_name: versionChanges.change_name,
                         description_html: versionChanges.description_html,
                         description_long: versionChanges.description_html
                     },
@@ -181,7 +176,7 @@ var controller = {
 
     deleteVersionChanges: async function(req, res){
 
-        var idVersionChanges = req.params.id;
+        var idVersionChanges = req.params.idVersionChanges;
        
         await VersionChanges.destroy({where: {id: idVersionChanges}}).then(function(versionChangesDelete){ 
             return res.status(200).send({

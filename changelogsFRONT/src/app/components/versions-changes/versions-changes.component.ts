@@ -51,6 +51,7 @@ export class VersionsChangesComponent implements OnInit {
   }
 
   getAllVersionsChanges(){
+    this.versionsChanges = [];
     let idProject = this._route.snapshot.params['idProject'];
     let idVersion = this._route.snapshot.params['idVersion'];
 
@@ -74,15 +75,15 @@ export class VersionsChangesComponent implements OnInit {
     let idVersion = this._route.snapshot.params['idVersion'];
     this._versionChangesService.getVersionChanges(idProject, idVersion, idVersionChanges).subscribe(
       (response) => {
-        let vers = response.res;
+        let versChangs = response.res;
         this.versionChanges = new VersionChanges(
-          vers.id,
-          vers.project_id,
-          vers.version_name,
-          vers.description,
-          vers.description_html,
+          versChangs.id,
+          versChangs.version_id,
+          versChangs.change_name,
+          versChangs.description_html,
+          versChangs.description_long,
         );
-        console.log(this.version);
+        console.log(this.versionChanges);
       },
       (error) => {
         this.status = 'error';
@@ -142,9 +143,9 @@ export class VersionsChangesComponent implements OnInit {
     this.modalService.open(createContent);
   }
 
-  createVersion(idProject: string ,projectForm: NgForm) {
+  createVersionChanges(idProject: string,idVersion: string ,projectForm: NgForm) {
     if (projectForm.valid) {
-      this._versionService.setVersion(idProject, projectForm.value).subscribe(
+      this._versionChangesService.setVersionChanges(idProject, idVersion, projectForm.value).subscribe(
         (response) => {
           console.log(response);
           this.getAllVersionsChanges();
@@ -157,19 +158,18 @@ export class VersionsChangesComponent implements OnInit {
     }
   }
 
-  editVersion() {
-    this._versionService.editVersion(this.version).subscribe(
+  editVersionChanges() {
+    let idProject = this._route.snapshot.params['idProject'];
+    let idVersion = this._route.snapshot.params['idVersion'];
+    this._versionChangesService.editVersionChanges(idProject, idVersion ,this.versionChanges).subscribe(
       (response) => {
-        let vers = response.res;
-        this.version = new Version(
-          vers.id,
-          vers.project_id,
-          vers.version_name,
-          vers.description,
-          vers.description_html,
-          vers.version_date,
-          vers.state,
-          vers.publisher
+        let versChange = response.res;
+        this.versionChanges = new VersionChanges(
+          versChange.id,
+          versChange.version_id,
+          versChange.change_name,
+          versChange.description_html,
+          versChange.description_long
         );
         this.getAllVersionsChanges();
       },
