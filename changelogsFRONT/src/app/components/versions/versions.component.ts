@@ -118,10 +118,6 @@ export class VersionsComponent implements OnInit, DoCheck {
     );
   }
 
-  viewChangeVersions(idProject: any, idVersion: any): void{
-    this._router.navigate(['project/'+idProject+'/version/'+idVersion+"/versionsChanges"]);
-  }
-
   edit(editContent: any, idVersion: any) {
     this.getVersion(idVersion);
     this.modalService.open(editContent);
@@ -185,6 +181,14 @@ export class VersionsComponent implements OnInit, DoCheck {
         console.log(error);
       }
     );
+  }
+
+  viewChangeVersions(idProject: any, idVersion: any): void{
+    this._router.navigate(['project/'+idProject+'/version/'+idVersion+"/versionsChanges"]);
+  }
+
+  goBack(){
+    this._router.navigate(['projects']);
   }
 
 }

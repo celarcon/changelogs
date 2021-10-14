@@ -211,4 +211,9 @@ export class VersionsChangesComponent implements OnInit, DoCheck {
     );
   }
 
+  goBack(){
+    let idProject = this._route.snapshot.params['idProject'];
+    this._router.navigate(['project/'+idProject+'/versions']);
+  }
+
 }
