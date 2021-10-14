@@ -12,7 +12,7 @@ CREATE TABLE version (
     description varchar(255),
     description_html varchar(255),
     version_date  datetime NOT NULL DEFAULT current_timestamp(),
-    state BIT	NOT NULL DEFAULT 1,
+    state TINYINT NOT NULL DEFAULT 1,
     publisher  varchar(50)
 );
 CREATE TABLE version_changes (

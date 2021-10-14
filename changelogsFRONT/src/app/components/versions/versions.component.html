@@ -15,18 +15,18 @@
         </div>
     </div>
     <div class="row">
-        <div *ngFor="let version of versions;" class="col-sm-6">
+        <div *ngFor="let version of versions;" class="col-sm-6 mt-2">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title mb-3">{{version.version_name}}
-                        <fa-icon (click)="deleteProject(version.id)" [icon]="faTrash" style="float: right;"></fa-icon>
+                        <fa-icon (click)="deleteVersion(project.id, version.id)" [icon]="faTrash" style="float: right;"></fa-icon>
                         <fa-icon (click)="edit(editContent, version.id)" [icon]="faPen"
                             style="float: right; margin-right: 5px;"></fa-icon>
                     </h5>
-                    <p class="card-text m-0">Descripción: {{version.description}}</p>
-                    <p class="card-text m-0">Descripción html: {{version.description_html}}</p>
-                    <p class="card-text m-0">Fecha: {{version.version_date}}</p>
-                    <p class="card-text">estado:
+                    <p class="card-text m-0"><strong>Descripción: </strong> {{version.description}}</p>
+                    <p class="card-text m-0"><strong>Descripción html: </strong> {{version.description_html}}</p>
+                    <p class="card-text m-0"><strong>Fecha: </strong> {{version.version_date}}</p>
+                    <p class="card-text m-0"> <strong> Estado:</strong> 
                         <span *ngIf="version.state == 0">
                             activo
                         </span>
@@ -34,54 +34,65 @@
                             inactivo
                         </span>
                     </p>
-                    <p class="card-text">Autor: {{version.publisher}}</p>
-                    <a class="btn btn-primary"  (click)="viewVersions(version.id, version.id)">Ver cambios en versiones</a>
+                    <p class="card-text mt-0"><strong>Autor:</strong> {{version.publisher}}</p>
+                    <a class="btn btn-primary"  (click)="viewChangeVersions(project.id, version.id)">Ver cambios en versiones</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- MODAL EDIT -->
 
+<!-- MODAL EDIT -->
 <ng-template #editContent let-c="close" let-d="dismiss">
     <form>
         <div class="modal-header">
-            <h4 class="modal-title" id="modal-basic-title">EDITA EL PROYECTO</h4>
+            <h4 class="modal-title" id="modal-basic-title">EDITA LA VERSIÓN</h4>
             <button type="button" style="background: none; outline:none; border: none;" aria-label="Close"
                 (click)="d('Cross click')">
                 <fa-icon [icon]="faTimes"></fa-icon>
             </button>
         </div>
-        <div class="modal-body">
+        <div class="modal-body  m-3">
 
             <div class="form-group row">
                 <label class="col-6">Nombre del proyecto</label>
-                <input class="col-6" type="text" name="name" #name="ngModel" [(ngModel)]="project.project_name">
+                <input class="col-6" type="text" name="version_name" #version_name="ngModel" [(ngModel)]="version.version_name">
             </div>
             <div class="form-group row mt-3">
-                <label class="col-6">Compañía</label>
-                <input class="col-6" type="text" name="company" #company="ngModel" [(ngModel)]="project.company">
+                <label class="col-6">Descripción</label>
+                <input class="col-6" type="text" name="description" #description="ngModel" [(ngModel)]="version.description">
+            </div>
+            <div class="form-group row mt-3">
+                <label class="col-6">Descripción HTML</label>
+                <textarea class="col-6" type="text" name="description_html" #description_html="ngModel" [(ngModel)]="version.description_html" required>
+                </textarea>
+            </div>
+            <div class="form-group row mt-3">
+                <label class="col-6">Fecha</label>
+                <input class="col-6" type="date" name="version_date" ngModel required>
             </div>
             <div class="form-group row mt-3">
                 <label class="col-6">Estado</label>
-                <select class="col-6" name="state" #state="ngModel" [(ngModel)]="project.state">
+                <select class="col-6" name="state" #state="ngModel" [(ngModel)]="version.state">
                     <option value="0">Activo</option>
                     <option value="1">Inactivo</option>
                 </select>
             </div>
-
+            <div class="form-group row mt-3">
+                <label class="col-6">Autor</label>
+                <input class="col-6" type="text" name="publisher" #publisher="ngModel" [(ngModel)]="version.publisher" required>
+            </div>
         </div>
         <div class="modal-footer">
-            <input value="EDITAR" type="button" class="btn btn-outline-dark" (click)="editProject()">
+            <input value="EDITAR" type="button" class="btn btn-outline-dark" (click)="editVersion()">
         </div>
     </form>
 </ng-template>
 
 <!-- MODAL CREATE PROJECT-->
-
 <ng-template #createContent let-c="close" let-d="dismiss">
-    <form #createForm="ngForm" (ngSubmit)="createProject(createForm)">
+    <form #createForm="ngForm" (ngSubmit)="createVersion(project.id, createForm)">
         <div class="modal-header">
             <h4 class="modal-title" id="modal-basic-title">CREAR UN NUEVO PROYECTO</h4>
             <button type="button" style="background: none; outline:none; border: none;" aria-label="Close"
@@ -90,13 +101,23 @@
             </button>
         </div>
         <div class="modal-body m-3">
+
             <div class="form-group row">
-                <label class="col-6">Nombre del proyecto</label>
-                <input class="col-6" type="text" name="project_name"  ngModel required>
+                <label class="col-6">Nombre de la versión</label>
+                <input class="col-6" type="text" name="version_name"  ngModel required>
             </div>
             <div class="form-group row mt-3">
-                <label class="col-6">Compañía</label>
-                <input class="col-6" type="text" name="company" ngModel required>
+                <label class="col-6">Descripción</label>
+                <input class="col-6" type="text" name="description" ngModel required>
+            </div>
+            <div class="form-group row mt-3">
+                <label class="col-6">Descripción HTML</label>
+                <textarea class="col-6" type="text" name="description_html" ngModel required>
+                </textarea>
+            </div>
+            <div class="form-group row mt-3">
+                <label class="col-6">Fecha</label>
+                <input class="col-6" type="date" name="version_date" ngModel required>
             </div>
             <div class="form-group row mt-3">
                 <label class="col-6">Estado</label>
@@ -104,6 +125,10 @@
                     <option value="0">Activo</option>
                     <option value="1">Inactivo</option>
                 </select>
+            </div>
+            <div class="form-group row mt-3">
+                <label class="col-6">Autor</label>
+                <input class="col-6" type="text" name="publisher" ngModel required>
             </div>
         </div>
         <div class="modal-footer">

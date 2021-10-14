@@ -3,12 +3,16 @@ import { HttpClient, HttpHeaderResponse, HttpHeaders } from '@angular/common/htt
 import { Observable } from "rxjs";
 import { global } from "./global";
 import { param } from "jquery";
+import { UserService } from '../services/user.service';
 
 @Injectable()
 export class VersionService{
     public url : string;
 
-    constructor(private _http: HttpClient){
+    constructor(
+        private _http: HttpClient,
+        private _userService: UserService
+        ){
         this.url = global.url;
     }
 
@@ -26,10 +30,32 @@ export class VersionService{
         return this._http.get(this.url+'project/'+idProject+'/version/'+idVersion, {headers: headers});
     }
 
-    setVersion(project: any): Observable<any>{
-        let headers = new HttpHeaders().set('Content-type', 'application/json');
-        let params = JSON.stringify(project);
+    setVersion(idProject: string, version: any): Observable<any>{
 
-        return this._http.post(this.url+'createVersion', params, {headers: headers});
+        let headers = new HttpHeaders().set('Content-type', 'application/json')
+                                       .set('Authorization', this._userService.getToken());
+
+        let params = JSON.stringify(version);
+
+        return this._http.post(this.url+'project/'+idProject+'/version', params, {headers: headers});
     }
+
+    editVersion(version: any): Observable<any>{
+        let idProject = version.project_id;
+        let idVersion = version.id;
+        let headers = new HttpHeaders().set('Content-type', 'application/json')
+                                       .set('Authorization', this._userService.getToken());
+        
+        let params = JSON.stringify(version);
+
+        return this._http.put(this.url+'project/'+idProject+'/version/'+idVersion, params, {headers: headers});
+    }
+
+    deleteVersion(idProject: any, idVersion: any): Observable<any>{
+        let headers = new HttpHeaders().set('Content-type', 'application/json')
+                                       .set('Authorization', this._userService.getToken());
+
+        return this._http.delete(this.url+'/project/'+idProject+'/version/'+idVersion, {headers: headers});
+    }
+
 }

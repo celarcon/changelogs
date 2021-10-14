@@ -44,11 +44,12 @@ export class VersionsComponent implements OnInit {
   }
 
   getAllVersions(){
+    this.versions = [];
     let idProject = this._route.snapshot.params['idProject'];
     this._versionService.getVersions(idProject).subscribe(
       (response) => {
           for(let vers of response.res){
-            let tempVersion = new Version(vers.id, vers.project_id, vers.version_name, vers.description, vers.description_html,vers.version_date,vers.state.data[0],vers.publisher); 
+            let tempVersion = new Version(vers.id, vers.project_id, vers.version_name, vers.description, vers.description_html,vers.version_date,vers.state,vers.publisher); 
             this.versions.push(tempVersion); 
           }
 
@@ -86,13 +87,14 @@ export class VersionsComponent implements OnInit {
         this.version = new Version(
           vers.id,
           vers.project_id,
-          vers.project_name,
+          vers.version_name,
           vers.description,
           vers.description_html,
           vers.version_date,
           vers.state,
           vers.publisher
         );
+        console.log(this.version);
       },
       (error) => {
         this.status = 'error';
@@ -101,12 +103,12 @@ export class VersionsComponent implements OnInit {
     );
   }
 
-  viewVersions(idProject: any, idVersion: any): void{
+  viewChangeVersions(idProject: any, idVersion: any): void{
     this._router.navigate(['project/'+idProject+'/version/'+idVersion+"/versionsChanges"]);
   }
 
-  edit(editContent: any, idProject: any) {
-    this.getProject(idProject);
+  edit(editContent: any, idVersion: any) {
+    this.getVersion(idVersion);
     this.modalService.open(editContent);
   }
 
@@ -114,9 +116,9 @@ export class VersionsComponent implements OnInit {
     this.modalService.open(createContent);
   }
 
-  createProject(projectForm: NgForm) {
+  createVersion(idProject: string ,projectForm: NgForm) {
     if (projectForm.valid) {
-      this._projectService.setProject(projectForm.value).subscribe(
+      this._versionService.setVersion(idProject, projectForm.value).subscribe(
         (response) => {
           console.log(response);
           this.getAllVersions();
@@ -129,15 +131,19 @@ export class VersionsComponent implements OnInit {
     }
   }
 
-  editProject() {
-    this._projectService.editProject(this.project).subscribe(
+  editVersion() {
+    this._versionService.editVersion(this.version).subscribe(
       (response) => {
-        let proj = response.res;
-        this.project = new Project(
-          proj.id,
-          proj.project_name,
-          proj.company,
-          proj.state
+        let vers = response.res;
+        this.version = new Version(
+          vers.id,
+          vers.project_id,
+          vers.version_name,
+          vers.description,
+          vers.description_html,
+          vers.version_date,
+          vers.state,
+          vers.publisher
         );
         this.getAllVersions();
       },
@@ -148,8 +154,8 @@ export class VersionsComponent implements OnInit {
     ); 
   }
 
-  deleteProject(idProject: any) {
-    this._projectService.deleteProject(idProject).subscribe(
+  deleteVersion(idProject: any, idVersion: any) {
+    this._versionService.deleteVersion(idProject, idVersion).subscribe(
       (response) => {
         let proj = response.res;
         this.project = new Project(

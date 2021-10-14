@@ -8,9 +8,10 @@ var controller = {
     createVersion:async function(req, res){
 
         var params = req.body;
+        var idProject = req.params.idProject;
 
         try{
-            var validator_project_id = !validator.isEmpty(params.project_id);
+            var validator_project_id = !validator.isEmpty(idProject);
             var validator_version_name = !validator.isEmpty(params.version_name);
             var validator_description = !validator.isEmpty(params.description);
             var validator_description_html = !validator.isEmpty(params.description_html);
@@ -22,7 +23,7 @@ var controller = {
                 && validator_description_html && validator_version_date && validator_publisher){
                 var version = new Version();
 
-                version.project_id = params.project_id;
+                version.project_id = idProject;
                 version.version_name = params.version_name;
                 version.description = params.description;
                 version.description_html = params.description_html;
@@ -135,9 +136,6 @@ var controller = {
           }).then( async function(version){ 
             if(version){
 
-                if(!validator.isEmpty(params.project_id)){
-                    version.project_id = params.project_id;
-                }
                 if(!validator.isEmpty(params.version_name)){
                     version.version_name = params.version_name;
                 }
@@ -150,7 +148,7 @@ var controller = {
                 if(!validator.isEmpty(params.version_date)){
                     version.version_date = params.version_date;
                 }
-                if(!validator.isEmpty(params.state)){
+                if(params.state == 0 || params.state == 1){
                     version.state = params.state;
                 }
                 if(!validator.isEmpty(params.publisher)){
@@ -158,7 +156,7 @@ var controller = {
                 }
 
                 await Version.update(
-                    {   project_id: version.project_id,
+                    {   
                         version_name: version.version_name,
                         description: version.description,
                         description_html: version.description_html,

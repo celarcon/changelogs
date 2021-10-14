@@ -32,10 +32,11 @@
 </div>
 
 <!-- MODAL EDIT -->
+
 <ng-template #editContent let-c="close" let-d="dismiss">
     <form>
         <div class="modal-header">
-            <h4 class="modal-title" id="modal-basic-title">EDITA LA VERSIÓN</h4>
+            <h4 class="modal-title" id="modal-basic-title">EDITA EL PROYECTO</h4>
             <button type="button" style="background: none; outline:none; border: none;" aria-label="Close"
                 (click)="d('Cross click')">
                 <fa-icon [icon]="faTimes"></fa-icon>
@@ -45,31 +46,20 @@
 
             <div class="form-group row">
                 <label class="col-6">Nombre del proyecto</label>
-                <input class="col-6" type="text" name="version_name" #version_name="ngModel" [(ngModel)]="version.version_name">
+                <input class="col-6" type="text" name="name" #name="ngModel" [(ngModel)]="project.project_name">
             </div>
             <div class="form-group row mt-3">
-                <label class="col-6">Descripción</label>
-                <input class="col-6" type="text" name="description" #description="ngModel" [(ngModel)]="version.description">
-            </div>
-            <div class="form-group row mt-3">
-                <label class="col-6">Descripción HTML</label>
-                <input class="col-6" type="text" name="description_html" #description_html="ngModel" [(ngModel)]="version.description" required>
-            </div>
-            <div class="form-group row mt-3">
-                <label class="col-6">Fecha</label>
-                <input class="col-6" type="date" name="version_date" ngModel required>
+                <label class="col-6">Compañía</label>
+                <input class="col-6" type="text" name="company" #company="ngModel" [(ngModel)]="project.company">
             </div>
             <div class="form-group row mt-3">
                 <label class="col-6">Estado</label>
-                <select class="col-6" name="state" #state="ngModel" [(ngModel)]="version.state">
+                <select class="col-6" name="state" #state="ngModel" [(ngModel)]="project.state">
                     <option value="0">Activo</option>
                     <option value="1">Inactivo</option>
                 </select>
             </div>
-            <div class="form-group row mt-3">
-                <label class="col-6">Autor</label>
-                <input class="col-6" type="date" name="publisher" #publisher="ngModel" [(ngModel)]="version.publisher" required>
-            </div>
+
         </div>
         <div class="modal-footer">
             <input value="EDITAR" type="button" class="btn btn-outline-dark" (click)="editProject()">
@@ -78,6 +68,7 @@
 </ng-template>
 
 <!-- MODAL CREATE PROJECT-->
+
 <ng-template #createContent let-c="close" let-d="dismiss">
     <form #createForm="ngForm" (ngSubmit)="createProject(createForm)">
         <div class="modal-header">
@@ -89,20 +80,12 @@
         </div>
         <div class="modal-body m-3">
             <div class="form-group row">
-                <label class="col-6">Nombre de la versión</label>
-                <input class="col-6" type="text" name="version_name"  ngModel required>
+                <label class="col-6">Nombre del proyecto</label>
+                <input class="col-6" type="text" name="project_name"  ngModel required>
             </div>
             <div class="form-group row mt-3">
-                <label class="col-6">Descripción</label>
-                <input class="col-6" type="text" name="description" ngModel required>
-            </div>
-            <div class="form-group row mt-3">
-                <label class="col-6">Descripción HTML</label>
-                <input class="col-6" type="text" name="description_html" ngModel required>
-            </div>
-            <div class="form-group row mt-3">
-                <label class="col-6">Fecha</label>
-                <input class="col-6" type="date" name="version_date" ngModel required>
+                <label class="col-6">Compañía</label>
+                <input class="col-6" type="text" name="company" ngModel required>
             </div>
             <div class="form-group row mt-3">
                 <label class="col-6">Estado</label>
@@ -110,10 +93,6 @@
                     <option value="0">Activo</option>
                     <option value="1">Inactivo</option>
                 </select>
-            </div>
-            <div class="form-group row mt-3">
-                <label class="col-6">Autor</label>
-                <input class="col-6" type="date" name="publisher" ngModel required>
             </div>
         </div>
         <div class="modal-footer">
