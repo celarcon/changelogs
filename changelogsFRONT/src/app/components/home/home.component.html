@@ -1,5 +1,30 @@
-<app-navbar></app-navbar>
-<div>
-    {{identity}}
+
+<div class="container">
+    <div class="jumbotron jumbotron-fluid" style="color:#454545; background: none;">
+        <div class="container">
+            <h1 class="display-4">Proyectos</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div *ngFor="let project of projects;" class="col-sm-6 mt-2">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title mb-3"><strong>{{project.project_name}}</strong> </h5>
+                    <p class="card-text m-0"><strong>Compañía: </strong>{{project.company}}</p>
+                    <p class="card-text"><strong>Estado: </strong> 
+                        <span *ngIf="project.state == 0">
+                            activo
+                        </span>
+                        <span *ngIf="project.state == 1">
+                            inactivo
+                        </span>
+                    </p>
+                    <a class="btn btn-primary">Ver versiones</a>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="projects?.length == 0" class="m-4">
+            <h2>No hay proyectos creados</h2>
+        </div>
+    </div>
 </div>
-<!-- <router-outlet></router-outlet> -->

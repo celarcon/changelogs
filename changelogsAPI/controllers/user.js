@@ -51,7 +51,7 @@ var controller = {
         var validate_name = !validator.isEmpty(params.name);
         var validate_password = !validator.isEmpty(params.password);
     
-        if(!validate_name || !validate_name){
+        if(!validate_name || !validate_password){
             return  res.status(500).send({
                 message: "Los datos son incorrectos"
             });
