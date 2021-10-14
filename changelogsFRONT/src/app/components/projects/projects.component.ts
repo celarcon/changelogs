@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { faTrashAlt, faPen, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgForm } from '@angular/forms';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-projects',
   templateUrl: './projects.component.html',
@@ -22,7 +23,7 @@ export class ProjectsComponent implements OnInit, DoCheck {
   public faTimes = faTimes;
 
   public identity: any;
-  public token: any; 
+  public token: any;
 
   constructor(
     private _userService: UserService,
@@ -39,15 +40,15 @@ export class ProjectsComponent implements OnInit, DoCheck {
   }
 
   ngOnInit(): void {
-    
-    if(!this.identity || !this.token){
+
+    if (!this.identity || !this.token) {
       this._router.navigate(['/login']);
     }
 
     this.getAllProjects();
   }
 
-  ngDoCheck(){
+  ngDoCheck() {
     this.identity = this._userService.getIdentity();
     this.token = this._userService.getToken();
   }
@@ -105,17 +106,43 @@ export class ProjectsComponent implements OnInit, DoCheck {
   }
 
   createProject(projectForm: NgForm) {
-    if (projectForm.valid) {
-      this._projectService.setProject(projectForm.value).subscribe(
-        (response) => {
-          this.getAllProjects();
-        },
-        (error) => {
-          this.status = 'error';
-          console.log(error);
+
+    Swal.fire({
+      title: 'Estas seguro?',
+      text: "Vas a crear un nuevo proyecto!",
+      icon: 'info',
+      showCancelButton: true,
+      confirmButtonColor: '#93B7BE',
+      cancelButtonColor: '#dc3545',
+      confirmButtonText: 'CREAR',
+      cancelButtonText: 'CANCELAR',
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+        if (projectForm.valid) {
+          this._projectService.setProject(projectForm.value).subscribe(
+            (response) => {
+              Swal.fire({
+                text: "El proyecto "+ response.res.project_name +" se creo exitosamente!",
+                confirmButtonColor: '#93B7BE',
+                icon: 'success',
+              });
+              this.getAllProjects();
+            },
+            (error) => {
+              this.status = 'error';
+              console.log(error);
+            }
+          );
+        }else{
+          Swal.fire({
+            text: "Algunoo algunos de los campos esta mal rellenos!",
+            confirmButtonColor: '#93B7BE',
+            icon: 'error',
+          });
         }
-      );
-    }
+      }
+    });
   }
 
   editProject() {
@@ -134,25 +161,45 @@ export class ProjectsComponent implements OnInit, DoCheck {
         this.status = 'error';
         console.log(error);
       }
-    ); 
+    );
   }
 
   deleteProject(idProject: any) {
-    this._projectService.deleteProject(idProject).subscribe(
-      (response) => {
-        let proj = response.res;
-        this.project = new Project(
-          proj.id,
-          proj.project_name,
-          proj.company,
-          proj.state
+    Swal.fire({
+      title: 'Estas seguro?',
+      text: "Eliminarás este proyecto!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#93B7BE',
+      cancelButtonColor: '#dc3545',
+      confirmButtonText: 'ELIMINAR',
+      cancelButtonText: 'CANCELAR',
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+        this._projectService.deleteProject(idProject).subscribe(
+          (response) => {
+            let proj = response.res;
+            this.project = new Project(
+              proj.id,
+              proj.project_name,
+              proj.company,
+              proj.state
+            );
+            Swal.fire({
+              text: "El proyecto se eliminó!",
+              confirmButtonColor: '#93B7BE',
+              icon: 'success',
+            });
+            this.getAllProjects();
+          },
+          (error) => {
+            this.status = 'error';
+            console.log(error);
+          }
         );
-        this.getAllProjects();
-      },
-      (error) => {
-        this.status = 'error';
-        console.log(error);
+
       }
-    );
+    });
   }
 }

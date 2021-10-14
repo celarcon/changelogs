@@ -6,15 +6,16 @@ import { VersionService } from 'src/app/services/version.service';
 import { Version } from '../../models/version';
 import { ProjectService } from 'src/app/services/project.service';
 import { Project } from '../../models/project';
-import { ActivatedRoute , Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { faTrashAlt, faPen, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { NgForm } from '@angular/forms';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-versions-changes',
   templateUrl: './versions-changes.component.html',
   styleUrls: ['./versions-changes.component.css'],
-  providers: [VersionChangesService,VersionService,ProjectService]
+  providers: [VersionChangesService, VersionService, ProjectService]
 })
 export class VersionsChangesComponent implements OnInit, DoCheck {
 
@@ -29,55 +30,58 @@ export class VersionsChangesComponent implements OnInit, DoCheck {
   public faTimes = faTimes;
 
   public identity: any;
-  public token: any; 
+  public token: any;
+  public idProject: string;
 
   constructor(
     private _userService: UserService,
     private _versionChangesService: VersionChangesService,
     private _versionService: VersionService,
     private _projectService: ProjectService,
-    private _route:ActivatedRoute,
+    private _route: ActivatedRoute,
     private _router: Router,
     private modalService: NgbModal
-  ) { 
-    this.status =  '';
+  ) {
+    this.status = '';
     this.versionsChanges = [];
-    this.versionChanges = new VersionChanges('','','','','');
-    this.version = new Version('','','','','','',0,'');
+    this.versionChanges = new VersionChanges('', '', '', '', '');
+    this.version = new Version('', '', '', '', '', '', 0, '');
     this.project = new Project('', '', '', 0);
 
     this.identity = this._userService.getIdentity();
     this.token = this._userService.getToken();
+    this.idProject = this._route.snapshot.params['idProject'];
   }
 
   ngOnInit(): void {
 
-    if(!this.identity || !this.token){
+    if (!this.identity || !this.token) {
       this._router.navigate(['/login']);
     }
-    
+
     let idProject = this._route.snapshot.params['idProject'];
     let idVersion = this._route.snapshot.params['idVersion'];
+
     this.getAllVersionsChanges();
     this.getVersion(idVersion);
     this.getProject(idProject);
   }
 
-  ngDoCheck(){
+  ngDoCheck() {
     this.identity = this._userService.getIdentity();
     this.token = this._userService.getToken();
   }
-  getAllVersionsChanges(){
+  getAllVersionsChanges() {
     this.versionsChanges = [];
     let idProject = this._route.snapshot.params['idProject'];
     let idVersion = this._route.snapshot.params['idVersion'];
 
     this._versionChangesService.getVersionsChanges(idProject, idVersion).subscribe(
       (response) => {
-          for(let vers of response.res){
-            let tempVersion = new VersionChanges(vers.id, vers.version_id, vers.change_name, vers.description_html, vers.description_long); 
-            this.versionsChanges.push(tempVersion); 
-          }
+        for (let vers of response.res) {
+          let tempVersion = new VersionChanges(vers.id, vers.version_id, vers.change_name, vers.description_html, vers.description_long);
+          this.versionsChanges.push(tempVersion);
+        }
       },
       (error) => {
         this.status = 'error';
@@ -156,24 +160,50 @@ export class VersionsChangesComponent implements OnInit, DoCheck {
     this.modalService.open(createContent);
   }
 
-  createVersionChanges(idProject: string,idVersion: string ,projectForm: NgForm) {
-    if (projectForm.valid) {
-      this._versionChangesService.setVersionChanges(idProject, idVersion, projectForm.value).subscribe(
-        (response) => {
-          this.getAllVersionsChanges();
-        },
-        (error) => {
-          this.status = 'error';
-          console.log(error);
+  createVersionChanges(idProject: string, idVersion: string, projectForm: NgForm) {
+
+    Swal.fire({
+      title: 'Estas seguro?',
+      text: "Vas a crear un nuevo cambio en la versión!",
+      icon: 'info',
+      showCancelButton: true,
+      confirmButtonColor: '#93B7BE',
+      cancelButtonColor: '#dc3545',
+      confirmButtonText: 'CREAR',
+      cancelButtonText: 'CANCELAR',
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+        if (projectForm.valid) {
+          this._versionChangesService.setVersionChanges(idProject, idVersion, projectForm.value).subscribe(
+            (response) => {
+              Swal.fire({
+                text: "El cambio de la versión "+ response.res.change_name +" se creo exitosamente!",
+                confirmButtonColor: '#93B7BE',
+                icon: 'success',
+              });
+              this.getAllVersionsChanges();
+            },
+            (error) => {
+              this.status = 'error';
+              console.log(error);
+            }
+          );
+        } else {
+          Swal.fire({
+            text: "Algunos o algunos de los campos esta mal rellenos!",
+            confirmButtonColor: '#93B7BE',
+            icon: 'error',
+          });
         }
-      );
-    }
+      }
+    });
   }
 
   editVersionChanges() {
     let idProject = this._route.snapshot.params['idProject'];
     let idVersion = this._route.snapshot.params['idVersion'];
-    this._versionChangesService.editVersionChanges(idProject, idVersion ,this.versionChanges).subscribe(
+    this._versionChangesService.editVersionChanges(idProject, idVersion, this.versionChanges).subscribe(
       (response) => {
         let versChange = response.res;
         this.versionChanges = new VersionChanges(
@@ -189,31 +219,48 @@ export class VersionsChangesComponent implements OnInit, DoCheck {
         this.status = 'error';
         console.log(error);
       }
-    ); 
-  }
-
-  deleteVersionChanges(idProject: any, idVersion: any, idVersionChanges: any) {
-    this._versionChangesService.deleteVersionChanges(idProject, idVersion, idVersionChanges).subscribe(
-      (response) => {
-        let proj = response.res;
-        this.project = new Project(
-          proj.id,
-          proj.project_name,
-          proj.company,
-          proj.state
-        );
-        this.getAllVersionsChanges();
-      },
-      (error) => {
-        this.status = 'error';
-        console.log(error);
-      }
     );
   }
 
-  goBack(){
-    let idProject = this._route.snapshot.params['idProject'];
-    this._router.navigate(['project/'+idProject+'/versions']);
+  deleteVersionChanges(idProject: any, idVersion: any, idVersionChanges: any) {
+    Swal.fire({
+      title: 'Estas seguro?',
+      text: "Eliminarás este cambio de la versión!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#93B7BE',
+      cancelButtonColor: '#dc3545',
+      confirmButtonText: 'ELIMINAR',
+      cancelButtonText: 'CANCELAR',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this._versionChangesService.deleteVersionChanges(idProject, idVersion, idVersionChanges).subscribe(
+          (response) => {
+            let proj = response.res;
+            this.project = new Project(
+              proj.id,
+              proj.project_name,
+              proj.company,
+              proj.state
+            );
+            Swal.fire({
+              text: "El cambio de la versión se eliminó!",
+              confirmButtonColor: '#93B7BE',
+              icon: 'success',
+            });
+            this.getAllVersionsChanges();
+          },
+          (error) => {
+            this.status = 'error';
+            console.log(error);
+          }
+        );
+      }
+    });
+  }
+
+  goBack() {
+    this._router.navigate(['project/' + this.idProject + '/versions']);
   }
 
 }
