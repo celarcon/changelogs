@@ -2,7 +2,6 @@ import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaderResponse, HttpHeaders } from '@angular/common/http'
 import { Observable } from "rxjs";
 import { global } from "./global";
-import { param } from "jquery";
 import { UserService } from '../services/user.service';
 
 @Injectable()

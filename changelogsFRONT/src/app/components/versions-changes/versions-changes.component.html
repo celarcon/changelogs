@@ -3,19 +3,89 @@
 <div class="container">
     <div class="row">
         <div class="col-12 mt-4 mb-3">
-            <button class="btn btn-outline-primary float-end">CREAR CAMBIO EN VERSIÓN</button>
+            <button class="btn btn-outline-primary float-end" (click)="create(createContent)">CREAR CAMBIO EN VERSIÓN</button>
         </div>
     </div>
     <div class="row">
-        <div *ngFor="let versionChanges of versionsChanges;" class="col-sm-6">
+        <div *ngFor="let versionChanges of versionsChanges;" class="col-sm-6 mt-2">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title mb-3">1</h5>
-                    <p class="card-text m-0">1</p>
-                    <p class="card-text">     </p>
-                    <a class="btn btn-primary">Ver cambios en versiones</a>
+                    <h5 class="card-title mb-3">{{versionChanges.change_name}}
+                        <fa-icon (click)="deleteVersionChanges(project.id, version.id, versionChanges.id)" [icon]="faTrash" style="float: right;"></fa-icon>
+                        <fa-icon (click)="edit(editContent, versionChanges.id)" [icon]="faPen"
+                            style="float: right; margin-right: 5px;"></fa-icon>
+                    </h5>
+                    <p class="card-text m-0"><strong>Descripción HTML: </strong>{{versionChanges.change_name}}</p>
+                    <p class="card-text"><strong>Descripción larga: </strong>{{versionChanges.description_long}}</p>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+
+<!-- MODAL EDIT -->
+<ng-template #editContent let-c="close" let-d="dismiss">
+    <form>
+        <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">EDITA EL CAMBIO DE LA VERSIÓN</h4>
+            <button type="button" style="background: none; outline:none; border: none;" aria-label="Close"
+                (click)="d('Cross click')">
+                <fa-icon [icon]="faTimes"></fa-icon>
+            </button>
+        </div>
+        <div class="modal-body  m-3">
+
+            <div class="form-group row">
+                <label class="col-6">Nombre del cambio de la versión</label>
+                <input class="col-6" type="text" name="change_name" #change_name="ngModel" [(ngModel)]="versionChanges.change_name">
+            </div>
+            <div class="form-group row mt-3">
+                <label class="col-6">Descripción HTML</label>
+                <input class="col-6" type="text" name="description_html" #description_html="ngModel" [(ngModel)]="versionChanges.description_html">
+            </div>
+            <div class="form-group row mt-3">
+                <label class="col-6">Descripción larga</label>
+                <textarea class="col-6" type="text" name="description_long" #description_long="ngModel" [(ngModel)]="versionChanges.description_long" required>
+                </textarea>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <input value="EDITAR" type="button" class="btn btn-outline-dark" (click)="editVersion()">
+        </div>
+    </form>
+</ng-template>
+
+<!-- MODAL CREATE PROJECT-->
+<ng-template #createContent let-c="close" let-d="dismiss">
+    <form #createForm="ngForm" (ngSubmit)="createVersion(project.id, createForm)">
+        <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">CREAR UN NUEVO CAMBIO DE LA VERSIÓN</h4>
+            <button type="button" style="background: none; outline:none; border: none;" aria-label="Close"
+                (click)="d('Cross click')">
+                <fa-icon [icon]="faTimes"></fa-icon>
+            </button>
+        </div>
+        <div class="modal-body m-3">
+
+            <div class="form-group row">
+                <label class="col-6">Nombre del cambio de la versión</label>
+                <input class="col-6" type="text" name="change_name"  ngModel required>
+            </div>
+            <div class="form-group row mt-3">
+                <label class="col-6">Descripción HTML</label>
+                <input class="col-6" type="text" name="description_html" ngModel required>
+            </div>
+            <div class="form-group row mt-3">
+                <label class="col-6">Descripción larga</label>
+                <textarea class="col-6" type="text" name="description_long" ngModel required>
+                </textarea>
+            </div>
+        
+        </div>
+        <div class="modal-footer">
+            <input type="submit" class="btn btn-outline-dark" value="CREAR">
+        </div>
+    </form>
+</ng-template>
