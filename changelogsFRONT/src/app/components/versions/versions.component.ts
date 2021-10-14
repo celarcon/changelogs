@@ -29,6 +29,8 @@ export class VersionsComponent implements OnInit, DoCheck {
   public identity: any;
   public token: any;
 
+  public modalReference: any;
+
   constructor(
     private _userService: UserService,
     private _versionService: VersionService,
@@ -121,11 +123,11 @@ export class VersionsComponent implements OnInit, DoCheck {
 
   edit(editContent: any, idVersion: any) {
     this.getVersion(idVersion);
-    this.modalService.open(editContent);
+    this.modalReference = this.modalService.open(editContent);
   }
 
   create(createContent: any) {
-    this.modalService.open(createContent);
+    this.modalReference = this.modalService.open(createContent);
   }
 
   createVersion(idProject: string, projectForm: NgForm) {
@@ -142,22 +144,23 @@ export class VersionsComponent implements OnInit, DoCheck {
     }).then((result) => {
       if (result.isConfirmed) {
 
-    if (projectForm.valid) {
-      this._versionService.setVersion(idProject, projectForm.value).subscribe(
-        (response) => {
-          Swal.fire({
-            text: "La versión "+ response.res.version_name +" se creo exitosamente!",
-            confirmButtonColor: '#93B7BE',
-            icon: 'success',
-          });
-          this.getAllVersions();
-        },
-        (error) => {
-          this.status = 'error';
-          console.log(error);
-        }
-      );
-    }else{
+        if (projectForm.valid) {
+          this._versionService.setVersion(idProject, projectForm.value).subscribe(
+            (response) => {
+              Swal.fire({
+                text: "La versión " + response.res.version_name + " se creo exitosamente!",
+                confirmButtonColor: '#93B7BE',
+                icon: 'success',
+              });
+              this.modalReference.close();
+              this.getAllVersions();
+            },
+            (error) => {
+              this.status = 'error';
+              console.log(error);
+            }
+          );
+        } else {
           Swal.fire({
             text: "Algunos o algunos de los campos esta mal rellenos!",
             confirmButtonColor: '#93B7BE',
@@ -169,26 +172,48 @@ export class VersionsComponent implements OnInit, DoCheck {
   }
 
   editVersion() {
-    this._versionService.editVersion(this.version).subscribe(
-      (response) => {
-        let vers = response.res;
-        this.version = new Version(
-          vers.id,
-          vers.project_id,
-          vers.version_name,
-          vers.description,
-          vers.description_html,
-          vers.version_date,
-          vers.state,
-          vers.publisher
+
+    Swal.fire({
+      title: 'Estas seguro?',
+      text: "Vas a editar la versión!",
+      icon: 'info',
+      showCancelButton: true,
+      confirmButtonColor: '#93B7BE',
+      cancelButtonColor: '#dc3545',
+      confirmButtonText: 'EDITAR',
+      cancelButtonText: 'CANCELAR',
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+        this._versionService.editVersion(this.version).subscribe(
+          (response) => {
+            let vers = response.res;
+            this.version = new Version(
+              vers.id,
+              vers.project_id,
+              vers.version_name,
+              vers.description,
+              vers.description_html,
+              vers.version_date,
+              vers.state,
+              vers.publisher
+            );
+            this.modalReference.close();
+            Swal.fire({
+              text: "La versión " + response.res.version_name + " se edito exitosamente!",
+              confirmButtonColor: '#93B7BE',
+              icon: 'success',
+            });
+            this.getAllVersions();
+          },
+          (error) => {
+            this.status = 'error';
+            console.log(error);
+          }
         );
-        this.getAllVersions();
-      },
-      (error) => {
-        this.status = 'error';
-        console.log(error);
+
       }
-    );
+    });
   }
 
   deleteVersion(idProject: any, idVersion: any) {

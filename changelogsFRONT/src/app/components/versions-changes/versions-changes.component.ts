@@ -33,6 +33,8 @@ export class VersionsChangesComponent implements OnInit, DoCheck {
   public token: any;
   public idProject: string;
 
+  public modalReference: any;
+
   constructor(
     private _userService: UserService,
     private _versionChangesService: VersionChangesService,
@@ -153,11 +155,11 @@ export class VersionsChangesComponent implements OnInit, DoCheck {
 
   edit(editContent: any, idVersionChanges: any) {
     this.getVersionChanges(idVersionChanges);
-    this.modalService.open(editContent);
+    this.modalReference = this.modalService.open(editContent);
   }
 
   create(createContent: any) {
-    this.modalService.open(createContent);
+    this.modalReference = this.modalService.open(createContent);
   }
 
   createVersionChanges(idProject: string, idVersion: string, projectForm: NgForm) {
@@ -178,10 +180,11 @@ export class VersionsChangesComponent implements OnInit, DoCheck {
           this._versionChangesService.setVersionChanges(idProject, idVersion, projectForm.value).subscribe(
             (response) => {
               Swal.fire({
-                text: "El cambio de la versión "+ response.res.change_name +" se creo exitosamente!",
+                text: "El cambio de la versión " + response.res.change_name + " se creo exitosamente!",
                 confirmButtonColor: '#93B7BE',
                 icon: 'success',
               });
+              this.modalReference.close();
               this.getAllVersionsChanges();
             },
             (error) => {
@@ -203,24 +206,47 @@ export class VersionsChangesComponent implements OnInit, DoCheck {
   editVersionChanges() {
     let idProject = this._route.snapshot.params['idProject'];
     let idVersion = this._route.snapshot.params['idVersion'];
-    this._versionChangesService.editVersionChanges(idProject, idVersion, this.versionChanges).subscribe(
-      (response) => {
-        let versChange = response.res;
-        this.versionChanges = new VersionChanges(
-          versChange.id,
-          versChange.version_id,
-          versChange.change_name,
-          versChange.description_html,
-          versChange.description_long
+
+    Swal.fire({
+      title: 'Estas seguro?',
+      text: "Vas a editar el cambio de la versión!",
+      icon: 'info',
+      showCancelButton: true,
+      confirmButtonColor: '#93B7BE',
+      cancelButtonColor: '#dc3545',
+      confirmButtonText: 'EDITAR',
+      cancelButtonText: 'CANCELAR',
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+        this._versionChangesService.editVersionChanges(idProject, idVersion, this.versionChanges).subscribe(
+          (response) => {
+            let versChange = response.res;
+            this.versionChanges = new VersionChanges(
+              versChange.id,
+              versChange.version_id,
+              versChange.change_name,
+              versChange.description_html,
+              versChange.description_long
+            );
+            this.modalReference.close();
+            Swal.fire({
+              text: "El cambio de la versión " + response.res.change_name + " se edito exitosamente!",
+              confirmButtonColor: '#93B7BE',
+              icon: 'success',
+            });
+            this.getAllVersionsChanges();
+          },
+          (error) => {
+            this.status = 'error';
+            console.log(error);
+          }
         );
-        this.getAllVersionsChanges();
-      },
-      (error) => {
-        this.status = 'error';
-        console.log(error);
+
       }
-    );
+    });
   }
+
 
   deleteVersionChanges(idProject: any, idVersion: any, idVersionChanges: any) {
     Swal.fire({

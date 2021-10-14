@@ -25,6 +25,8 @@ export class ProjectsComponent implements OnInit, DoCheck {
   public identity: any;
   public token: any;
 
+  public modalReference: any;
+
   constructor(
     private _userService: UserService,
     private _projectService: ProjectService,
@@ -76,11 +78,11 @@ export class ProjectsComponent implements OnInit, DoCheck {
 
   edit(editContent: any, idProject: any) {
     this.getProject(idProject);
-    this.modalService.open(editContent);
+    this.modalReference = this.modalService.open(editContent);
   }
 
   create(createContent: any) {
-    this.modalService.open(createContent);
+    this.modalReference = this.modalService.open(createContent);
   }
 
   viewVersions(idProject: any): void {
@@ -123,10 +125,11 @@ export class ProjectsComponent implements OnInit, DoCheck {
           this._projectService.setProject(projectForm.value).subscribe(
             (response) => {
               Swal.fire({
-                text: "El proyecto "+ response.res.project_name +" se creo exitosamente!",
+                text: "El proyecto " + response.res.project_name + " se creo exitosamente!",
                 confirmButtonColor: '#93B7BE',
                 icon: 'success',
               });
+              this.modalReference.close();
               this.getAllProjects();
             },
             (error) => {
@@ -134,7 +137,7 @@ export class ProjectsComponent implements OnInit, DoCheck {
               console.log(error);
             }
           );
-        }else{
+        } else {
           Swal.fire({
             text: "Algunoo algunos de los campos esta mal rellenos!",
             confirmButtonColor: '#93B7BE',
@@ -146,22 +149,44 @@ export class ProjectsComponent implements OnInit, DoCheck {
   }
 
   editProject() {
-    this._projectService.editProject(this.project).subscribe(
-      (response) => {
-        let proj = response.res;
-        this.project = new Project(
-          proj.id,
-          proj.project_name,
-          proj.company,
-          proj.state
+
+    Swal.fire({
+      title: 'Estas seguro?',
+      text: "Vas a editar el proyecto!",
+      icon: 'info',
+      showCancelButton: true,
+      confirmButtonColor: '#93B7BE',
+      cancelButtonColor: '#dc3545',
+      confirmButtonText: 'EDITAR',
+      cancelButtonText: 'CANCELAR',
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+        this._projectService.editProject(this.project).subscribe(
+          (response) => {
+            let proj = response.res;
+            this.project = new Project(
+              proj.id,
+              proj.project_name,
+              proj.company,
+              proj.state
+            );
+            this.modalReference.close();
+            Swal.fire({
+              text: "El proyecto " + response.res.project_name + " se edito exitosamente!",
+              confirmButtonColor: '#93B7BE',
+              icon: 'success',
+            });
+            this.getAllProjects();
+          },
+          (error) => {
+            this.status = 'error';
+            console.log(error);
+          }
         );
-        this.getAllProjects();
-      },
-      (error) => {
-        this.status = 'error';
-        console.log(error);
+
       }
-    );
+    });
   }
 
   deleteProject(idProject: any) {
