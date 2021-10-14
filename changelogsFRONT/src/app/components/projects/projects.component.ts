@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, DoCheck } from '@angular/core';
+import { UserService } from '../../services/user.service';
 import { ProjectService } from 'src/app/services/project.service';
 import { Project } from '../../models/project';
 import { Router } from '@angular/router';
@@ -11,7 +12,7 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./projects.component.css'],
   providers: [ProjectService, NgbModalConfig, NgbModal],
 })
-export class ProjectsComponent implements OnInit {
+export class ProjectsComponent implements OnInit, DoCheck {
   public status: string;
   public project: Project;
   public projects: Array<Project>;
@@ -20,7 +21,11 @@ export class ProjectsComponent implements OnInit {
   public faPen = faPen;
   public faTimes = faTimes;
 
+  public identity: any;
+  public token: any; 
+
   constructor(
+    private _userService: UserService,
     private _projectService: ProjectService,
     private _router: Router,
     private modalService: NgbModal
@@ -28,10 +33,23 @@ export class ProjectsComponent implements OnInit {
     this.status = '';
     this.projects = [];
     this.project = new Project('', '', '', 0);
+
+    this.identity = this._userService.getIdentity();
+    this.token = this._userService.getToken();
   }
 
   ngOnInit(): void {
+    
+    if(!this.identity || !this.token){
+      this._router.navigate(['/login']);
+    }
+
     this.getAllProjects();
+  }
+
+  ngDoCheck(){
+    this.identity = this._userService.getIdentity();
+    this.token = this._userService.getToken();
   }
 
   getAllProjects() {

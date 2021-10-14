@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, DoCheck } from '@angular/core';
+import { UserService } from '../../services/user.service';
 import { VersionService } from 'src/app/services/version.service';
 import { Version } from '../../models/version';
-import {ActivatedRoute , Router} from '@angular/router';
+import { ActivatedRoute , Router} from '@angular/router';
 import { ProjectService } from 'src/app/services/project.service';
 import { Project } from '../../models/project';
 import { faTrashAlt, faPen, faTimes } from '@fortawesome/free-solid-svg-icons';
@@ -13,7 +14,7 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./versions.component.css'],
   providers: [VersionService, ProjectService] 
 })
-export class VersionsComponent implements OnInit {
+export class VersionsComponent implements OnInit, DoCheck {
 
   public status: string;
   public versions: Array<Version>;
@@ -24,7 +25,11 @@ export class VersionsComponent implements OnInit {
   public faPen = faPen;
   public faTimes = faTimes;
 
+  public identity: any;
+  public token: any; 
+
   constructor(
+    private _userService: UserService,
     private _versionService: VersionService,
     private _projectService: ProjectService,
     private _route:ActivatedRoute,
@@ -35,12 +40,25 @@ export class VersionsComponent implements OnInit {
     this.versions = [];
     this.version = new Version('','','','','','',0,'');
     this.project = new Project('', '', '', 0);
+
+    this.identity = this._userService.getIdentity();
+    this.token = this._userService.getToken();
    }
 
   ngOnInit(): void {
+
+    if(!this.identity || !this.token){
+      this._router.navigate(['/login']);
+    }
+    
     let idProject = this._route.snapshot.params['idProject'];
     this.getAllVersions();
     this.getProject(idProject);
+  }
+
+  ngDoCheck(){
+    this.identity = this._userService.getIdentity();
+    this.token = this._userService.getToken();
   }
 
   getAllVersions(){

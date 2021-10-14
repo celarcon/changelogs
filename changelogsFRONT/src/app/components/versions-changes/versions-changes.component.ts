@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, DoCheck } from '@angular/core';
+import { UserService } from '../../services/user.service';
 import { VersionChangesService } from 'src/app/services/versionChanges.service';
 import { VersionChanges } from '../../models/version_changes';
 import { VersionService } from 'src/app/services/version.service';
 import { Version } from '../../models/version';
 import { ProjectService } from 'src/app/services/project.service';
 import { Project } from '../../models/project';
-import {ActivatedRoute , Router} from '@angular/router';
+import { ActivatedRoute , Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { faTrashAlt, faPen, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { NgForm } from '@angular/forms';
@@ -15,7 +16,7 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./versions-changes.component.css'],
   providers: [VersionChangesService,VersionService,ProjectService]
 })
-export class VersionsChangesComponent implements OnInit {
+export class VersionsChangesComponent implements OnInit, DoCheck {
 
   public status: string;
   public versionsChanges: Array<VersionChanges>;
@@ -27,7 +28,11 @@ export class VersionsChangesComponent implements OnInit {
   public faPen = faPen;
   public faTimes = faTimes;
 
+  public identity: any;
+  public token: any; 
+
   constructor(
+    private _userService: UserService,
     private _versionChangesService: VersionChangesService,
     private _versionService: VersionService,
     private _projectService: ProjectService,
@@ -40,9 +45,17 @@ export class VersionsChangesComponent implements OnInit {
     this.versionChanges = new VersionChanges('','','','','');
     this.version = new Version('','','','','','',0,'');
     this.project = new Project('', '', '', 0);
+
+    this.identity = this._userService.getIdentity();
+    this.token = this._userService.getToken();
   }
 
   ngOnInit(): void {
+
+    if(!this.identity || !this.token){
+      this._router.navigate(['/login']);
+    }
+    
     let idProject = this._route.snapshot.params['idProject'];
     let idVersion = this._route.snapshot.params['idVersion'];
     this.getAllVersionsChanges();
@@ -50,6 +63,10 @@ export class VersionsChangesComponent implements OnInit {
     this.getProject(idProject);
   }
 
+  ngDoCheck(){
+    this.identity = this._userService.getIdentity();
+    this.token = this._userService.getToken();
+  }
   getAllVersionsChanges(){
     this.versionsChanges = [];
     let idProject = this._route.snapshot.params['idProject'];
