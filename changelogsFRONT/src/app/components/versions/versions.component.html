@@ -1,13 +1,16 @@
 <app-navbar></app-navbar>
 
 <div class="container">
-    <div class="row m-3">
-        <h1>Proyecto: {{project.project_name}}</h1>
-        <h2>Compañía: {{project.company}} </h2>
-        <h2>Estado: 
-            <span *ngIf="project.state == 0">Activo</span>
-            <span *ngIf="project.state == 1">Inactivo</span>
-        </h2>
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-4">Proyecto: {{project.project_name}}</h1>
+            <p class="lead mb-1">Compañía: {{project.company}}</p>
+            <p class="lead">
+                Estado: 
+                <span *ngIf="project.state == 0">Activo</span>
+                <span *ngIf="project.state == 1">Inactivo</span>
+            </p>
+        </div>
     </div>
     <div class="row">
         <div class="col-12 mt-4 mb-3">
@@ -19,7 +22,7 @@
         <div *ngFor="let version of versions;" class="col-sm-6 mt-2">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title mb-3">{{version.version_name}}
+                    <h5 class="card-title mb-3"><strong>{{version.version_name}}</strong>
                         <fa-icon (click)="deleteVersion(project.id, version.id)" [icon]="faTrash" class="delete" ></fa-icon>
                         <fa-icon (click)="edit(editContent, version.id)" [icon]="faPen" class="edit"></fa-icon>
                     </h5>
@@ -85,7 +88,7 @@
             </div>
         </div>
         <div class="modal-footer">
-            <input value="EDITAR" type="button" class="btn btn-outline-dark" (click)="editVersion()">
+            <input value="EDITAR" type="button" class="btn btn-outline-primary" (click)="editVersion()">
         </div>
     </form>
 </ng-template>
@@ -132,7 +135,7 @@
             </div>
         </div>
         <div class="modal-footer">
-            <input type="submit" class="btn btn-outline-dark" value="CREAR">
+            <input type="submit" class="btn btn-outline-primary" value="CREAR">
         </div>
     </form>
 </ng-template>

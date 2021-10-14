@@ -54,3 +54,14 @@ input:focus{
     float: right; 
     margin-right: 10px;
 }
+.jumbotron{
+    background: #93B7BE;
+    color: #F1FFFA;
+    border-radius: 5px;
+    margin-top: 30px;
+    padding: 10px;
+}
+
+.jumbotron.version{
+    background: #D5C7BC;
+}

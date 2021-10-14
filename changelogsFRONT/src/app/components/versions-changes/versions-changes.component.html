@@ -1,26 +1,30 @@
 <app-navbar></app-navbar>
 
 <div class="container">
-    <div class="row m-3">
-        <div class="col-6">
-            <h1>PROYECTO</h1>
-            <h2>Proyecto: {{project.project_name}}</h2>
-            <h2>Compañía: {{project.company}} </h2>
-            <h2>Estado: 
+
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-4">Proyecto: {{project.project_name}}</h1>
+            <p class="lead mb-1">Compañía: {{project.company}}</p>
+            <p class="lead">
+                Estado: 
                 <span *ngIf="project.state == 0">Activo</span>
                 <span *ngIf="project.state == 1">Inactivo</span>
-            </h2>
-        </div>
-        <div class="col-6">
-            <h1>VERSIÓN</h1>
-            <h2>Version: {{version.version_name}}</h2>
-            <h2>Descripción: {{version.description}} </h2>
-            <h2>Estado: 
-                <span *ngIf="version.state == 0">Activo</span>
-                <span *ngIf="version.state == 1">Inactivo</span>
-            </h2>
+            </p>
         </div>
     </div>
+    <div class="jumbotron jumbotron-fluid version">
+        <div class="container">
+            <h1 class="display-4">Versión: {{version.version_name}}</h1>
+            <p class="lead mb-1">Descripción: {{version.description}}</p>
+            <p class="lead">
+                Estado: 
+                <span *ngIf="version.state == 0">Activo</span>
+                <span *ngIf="version.state == 1">Inactivo</span>
+            </p>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-12 mt-4 mb-3">
             <button class="btn btn-outline-danger float-end" style="margin-left: 20px;" (click)="goBack()">VOLVER</button>
@@ -72,7 +76,7 @@
 
         </div>
         <div class="modal-footer">
-            <input value="EDITAR" type="button" class="btn btn-outline-dark" (click)="editVersionChanges()">
+            <input value="EDITAR" type="button" class="btn btn-outline-primary" (click)="editVersionChanges()">
         </div>
     </form>
 </ng-template>
@@ -105,7 +109,7 @@
         
         </div>
         <div class="modal-footer">
-            <input type="submit" class="btn btn-outline-dark" value="CREAR">
+            <input type="submit" class="btn btn-outline-primary" value="CREAR">
         </div>
     </form>
 </ng-template>
