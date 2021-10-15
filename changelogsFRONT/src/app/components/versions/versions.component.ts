@@ -173,6 +173,8 @@ export class VersionsComponent implements OnInit, DoCheck {
 
   editVersion() {
 
+    console.log(this.version);
+
     Swal.fire({
       title: 'Estas seguro?',
       text: "Vas a editar la versión!",

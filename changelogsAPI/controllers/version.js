@@ -141,6 +141,7 @@ var controller = {
                 if (!validator.isEmpty(params.description_html)) {
                     version.description_html = params.description_html;
                 }
+                console.log(params.version_date);
                 if (!validator.isEmpty(params.version_date)) {
                     version.version_date = params.version_date;
                 }

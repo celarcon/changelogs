@@ -34,8 +34,10 @@
                 <div class="card-body">
                     <h5 class="card-title mb-3"><strong>{{versionChanges.change_name}}</strong></h5>
                     <hr>
-                    <p class="card-text m-0"><strong>Descripción HTML: </strong>{{versionChanges.description_html}}</p>
-                    <p class="card-text"><strong>Descripción larga: </strong>{{versionChanges.description_long}}</p>
+                    <p class="card-text m-0"><strong>Descripción HTML: </strong></p>
+                    <p class="description" [innerHTML]="versionChanges.description_html"></p>
+                    <p class="card-text m-0"><strong>Descripción larga: </strong></p>
+                    <p class="description">{{versionChanges.description_long}}</p>
                 </div>
             </div>
         </div>

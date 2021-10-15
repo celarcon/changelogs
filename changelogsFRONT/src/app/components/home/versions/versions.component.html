@@ -1,10 +1,10 @@
 <div class="container">
     <div class="jumbotron jumbotron-fluid">
         <div class="container">
-            <h1 class="display-4"><strong>Proyecto: </strong> {{project.project_name}}</h1>
-            <p class="lead mb-1">Compañía: {{project.company}}</p>
+            <h1 class="display-4">Proyecto: {{project.project_name}}</h1>
+            <p class="lead mb-1"><strong>Compañía: </strong> {{project.company}}</p>
             <p class="lead">
-                Estado: 
+                <strong>Estado: </strong>  
                 <span *ngIf="project.state == 0">Activo</span>
                 <span *ngIf="project.state == 1">Inactivo</span>
             </p>
@@ -16,10 +16,14 @@
                 <div class="card-body">
                     <h5 class="card-title mb-3"><strong>{{version.version_name}}</strong></h5>
                     <hr>
-                    <p class="card-text m-0"><strong>Descripción: </strong> {{version.description}}</p>
-                    <p class="card-text m-0"><strong>Descripción html: </strong> {{version.description_html}}</p>
-                    <p class="card-text m-0"><strong>Fecha: </strong> {{version.version_date}}</p>
-                    <p class="card-text m-0"> <strong> Estado:</strong> 
+                    <p class="card-text m-0"><strong>Descripción: </strong> </p>
+                    <p>{{version.description}}</p>
+                    <p class="card-text m-0"><strong>Descripción html: </strong></p>
+                    <p class="description" [innerHTML]="version.description_html"></p>
+                    <p class="card-text m-0"><strong>Fecha: </strong> </p>
+                    <p>{{version.version_date | date:'d/M/yyyy'}}</p>
+                    <p class="card-text m-0"> <strong> Estado:</strong> </p>
+                    <p>
                         <span *ngIf="version.state == 0">
                             activo
                         </span>
@@ -27,7 +31,8 @@
                             inactivo
                         </span>
                     </p>
-                    <p class="card-text mt-0"><strong>Autor:</strong> {{version.publisher}}</p>
+                    <p class="card-text mt-0 mb-0"><strong>Autor:</strong></p>
+                    <p> {{version.publisher}}</p>
                     <div style="text-align: right;">
                         <a class="btn btn-primary"  (click)="viewChangeVersions(version.id, project.id)">Ver cambios en versiones</a>
                     </div>

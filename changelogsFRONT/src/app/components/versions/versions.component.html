@@ -27,10 +27,14 @@
                         <fa-icon (click)="edit(editContent, version.id)" [icon]="faPen" class="edit"></fa-icon>
                     </h5>
                     <hr>
-                    <p class="card-text m-0"><strong>Descripción: </strong> {{version.description}}</p>
-                    <p class="card-text m-0"><strong>Descripción html: </strong> {{version.description_html}}</p>
-                    <p class="card-text m-0"><strong>Fecha: </strong> {{version.version_date}}</p>
-                    <p class="card-text m-0"> <strong> Estado:</strong> 
+                    <p class="card-text m-0"><strong>Descripción: </strong> </p>
+                    <p>{{version.description}}</p>
+                    <p class="card-text m-0"><strong>Descripción html: </strong></p>
+                    <p class="description" [innerHTML]="version.description_html"></p>
+                    <p class="card-text m-0"><strong>Fecha: </strong> </p>
+                    <p>{{version.version_date | date:'d/M/yyyy'}}</p>
+                    <p class="card-text m-0"> <strong> Estado:</strong> </p>
+                    <p>
                         <span *ngIf="version.state == 0">
                             activo
                         </span>
@@ -38,7 +42,8 @@
                             inactivo
                         </span>
                     </p>
-                    <p class="card-text mt-0"><strong>Autor:</strong> {{version.publisher}}</p>
+                    <p class="card-text mt-0 mb-0"><strong>Autor:</strong></p>
+                    <p> {{version.publisher}}</p>
                     <div style="text-align: right;">
                         <a class="btn btn-primary"  (click)="viewChangeVersions(project.id, version.id)">Ver cambios en versiones</a>
                     </div>
@@ -79,7 +84,7 @@
             </div>
             <div class="form-group row mt-3">
                 <label class="col-6">Fecha</label>
-                <input class="col-6" type="date" name="version_date" ngModel required>
+                <input class="col-6" type="date" name="version_date" #version_date="ngModel" [(ngModel)]="version.version_date" required>
             </div>
             <div class="form-group row mt-3">
                 <label class="col-6">Estado</label>
