@@ -231,7 +231,7 @@ export class VersionsChangesComponent implements OnInit, DoCheck {
             );
             this.modalReference.close();
             Swal.fire({
-              text: "El cambio de la versión " + response.res.change_name + " se edito exitosamente!",
+              text: "El cambio de la versión " + versChange.change_name + " se edito exitosamente!",
               confirmButtonColor: '#93B7BE',
               icon: 'success',
             });

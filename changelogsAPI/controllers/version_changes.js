@@ -141,7 +141,7 @@ var controller = {
                     {
                         change_name: versionChanges.change_name,
                         description_html: versionChanges.description_html,
-                        description_long: versionChanges.description_html
+                        description_long: versionChanges.description_long
                     },
                     { where: { id: idVersionChanges } }
                 ).then(async function (versionChanges) {

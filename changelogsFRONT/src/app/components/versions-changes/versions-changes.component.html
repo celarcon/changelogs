@@ -40,8 +40,10 @@
                         <fa-icon (click)="edit(editContent, versionChanges.id)" [icon]="faPen" class="edit"></fa-icon>
                     </h5>
                     <hr>
-                    <p class="card-text m-0"><strong>Descripción HTML: </strong>{{versionChanges.description_html}}</p>
-                    <p class="card-text"><strong>Descripción larga: </strong>{{versionChanges.description_long}}</p>
+                    <p class="card-text m-0"><strong>Descripción HTML: </strong></p>
+                    <p class="description" [innerHTML]="versionChanges.description_html"></p>
+                    <p class="card-text m-0"><strong>Descripción larga: </strong></p>
+                    <p class="description">{{versionChanges.description_long}}</p>
                 </div>
             </div>
         </div>
@@ -65,16 +67,16 @@
         <div class="modal-body  m-3">
 
             <div class="form-group row">
-                <label class="col-6">Nombre del cambio de la versión</label>
-                <input class="col-6" type="text" name="change_name" #change_name="ngModel" [(ngModel)]="versionChanges.change_name">
+                <label class="col-12">Nombre del cambio de la versión</label>
+                <input class="col-12" type="text" name="change_name" #change_name="ngModel" [(ngModel)]="versionChanges.change_name">
             </div>
             <div class="form-group row mt-3">
-                <label class="col-6">Descripción HTML</label>
-                <input class="col-6" type="text" name="description_html" #description_html="ngModel" [(ngModel)]="versionChanges.description_html">
+                <label class="col-12">Descripción HTML</label>
+                <angular-editor class="col-12" [placeholder]="'Enter text here...'" name="description_html" #description_html="ngModel" [(ngModel)]="versionChanges.description_html"></angular-editor>
             </div>
             <div class="form-group row mt-3">
-                <label class="col-6">Descripción larga</label>
-                <textarea class="col-6" type="text" name="description_long" #description_long="ngModel" [(ngModel)]="versionChanges.description_long" required>
+                <label class="col-12">Descripción larga</label>
+                <textarea class="col-12" type="text" name="description_long" #description_long="ngModel" [(ngModel)]="versionChanges.description_long" required>
                 </textarea>
             </div>
 

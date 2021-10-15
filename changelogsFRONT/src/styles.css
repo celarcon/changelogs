@@ -118,3 +118,17 @@ select{
     -ms-border-radius: 20px;
     -o-border-radius: 20px;
 }
+.angular-editor-textarea{
+    height: 300px !important;
+}
+
+.description{
+    margin-top: 5px;;
+    border: 1px solid gray;
+    border-radius: 20px;
+    padding: 10px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
+}

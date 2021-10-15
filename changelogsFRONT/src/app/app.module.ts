@@ -4,6 +4,7 @@ import { routing, appRoutingProviders } from './app.routing';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';  
+import { AngularEditorModule } from '@kolkov/angular-editor';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -38,7 +39,8 @@ import { VersionsPublicComponent } from './components/home/versions/versions.com
     routing,
     FontAwesomeModule,
     NgbModule,
-    CommonModule
+    CommonModule,
+    AngularEditorModule 
   ],
   providers: [
     appRoutingProviders,
