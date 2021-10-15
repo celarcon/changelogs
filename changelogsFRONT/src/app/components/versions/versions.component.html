@@ -4,9 +4,9 @@
     <div class="jumbotron jumbotron-fluid">
         <div class="container">
             <h1 class="display-4">Proyecto: {{project.project_name}}</h1>
-            <p class="lead mb-1">Compañía: {{project.company}}</p>
+            <p class="lead mb-1"><strong>Compañía: </strong> {{project.company}}</p>
             <p class="lead">
-                Estado: 
+                <strong>Estado: </strong> 
                 <span *ngIf="project.state == 0">Activo</span>
                 <span *ngIf="project.state == 1">Inactivo</span>
             </p>
@@ -70,32 +70,32 @@
         <div class="modal-body  m-3">
 
             <div class="form-group row">
-                <label class="col-6">Nombre del proyecto</label>
-                <input class="col-6" type="text" name="version_name" #version_name="ngModel" [(ngModel)]="version.version_name">
+                <label class="col-12">Nombre del proyecto</label>
+                <input class="col-12" type="text" name="version_name" #version_name="ngModel" [(ngModel)]="version.version_name">
             </div>
             <div class="form-group row mt-3">
-                <label class="col-6">Descripción</label>
-                <input class="col-6" type="text" name="description" #description="ngModel" [(ngModel)]="version.description">
+                <label class="col-12">Descripción</label>
+                <input class="col-12" type="text" name="description" #description="ngModel" [(ngModel)]="version.description">
             </div>
             <div class="form-group row mt-3">
-                <label class="col-6">Descripción HTML</label>
-                <textarea class="col-6" type="text" name="description_html" #description_html="ngModel" [(ngModel)]="version.description_html" required>
+                <label class="col-12">Descripción HTML</label>
+                <textarea class="col-12" type="text" name="description_html" #description_html="ngModel" [(ngModel)]="version.description_html" required>
                 </textarea>
             </div>
             <div class="form-group row mt-3">
-                <label class="col-6">Fecha</label>
-                <input class="col-6" type="date" name="version_date" #version_date="ngModel" [(ngModel)]="version.version_date" required>
+                <label class="col-12">Fecha</label>
+                <input class="col-12" type="date" name="version_date" #version_date="ngModel" [(ngModel)]="version.version_date" required>
             </div>
             <div class="form-group row mt-3">
-                <label class="col-6">Estado</label>
-                <select class="col-6" name="state" #state="ngModel" [(ngModel)]="version.state">
+                <label class="col-12">Estado</label>
+                <select class="col-12" name="state" #state="ngModel" [(ngModel)]="version.state">
                     <option value="0">Activo</option>
                     <option value="1">Inactivo</option>
                 </select>
             </div>
             <div class="form-group row mt-3">
-                <label class="col-6">Autor</label>
-                <input class="col-6" type="text" name="publisher" #publisher="ngModel" [(ngModel)]="version.publisher" required>
+                <label class="col-12">Autor</label>
+                <input class="col-12" type="text" name="publisher" #publisher="ngModel" [(ngModel)]="version.publisher" required>
             </div>
         </div>
         <div class="modal-footer">
@@ -117,32 +117,32 @@
         <div class="modal-body m-3">
 
             <div class="form-group row">
-                <label class="col-6">Nombre de la versión</label>
-                <input class="col-6" type="text" name="version_name"  ngModel required>
+                <label class="col-12">Nombre de la versión</label>
+                <input class="col-12" type="text" name="version_name"  ngModel required>
             </div>
             <div class="form-group row mt-3">
-                <label class="col-6">Descripción</label>
-                <input class="col-6" type="text" name="description" ngModel required>
+                <label class="col-12">Descripción</label>
+                <input class="col-12" type="text" name="description" ngModel required>
             </div>
             <div class="form-group row mt-3">
-                <label class="col-6">Descripción HTML</label>
-                <textarea class="col-6" type="text" name="description_html" ngModel required>
+                <label class="col-12">Descripción HTML</label>
+                <textarea class="col-12" type="text" name="description_html" ngModel required>
                 </textarea>
             </div>
             <div class="form-group row mt-3">
-                <label class="col-6">Fecha</label>
-                <input class="col-6" type="date" name="version_date" ngModel required>
+                <label class="col-12">Fecha</label>
+                <input class="col-12" type="date" name="version_date" ngModel required>
             </div>
             <div class="form-group row mt-3">
-                <label class="col-6">Estado</label>
-                <select class="col-6" name="state" ngModel required>
+                <label class="col-12">Estado</label>
+                <select class="col-12" name="state" ngModel required>
                     <option value="0">Activo</option>
                     <option value="1">Inactivo</option>
                 </select>
             </div>
             <div class="form-group row mt-3">
-                <label class="col-6">Autor</label>
-                <input class="col-6" type="text" name="publisher" ngModel required>
+                <label class="col-12">Autor</label>
+                <input class="col-12" type="text" name="publisher" ngModel required>
             </div>
         </div>
         <div class="modal-footer">

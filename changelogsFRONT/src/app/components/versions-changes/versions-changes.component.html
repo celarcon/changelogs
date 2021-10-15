@@ -5,9 +5,9 @@
     <div class="jumbotron jumbotron-fluid">
         <div class="container">
             <h1 class="display-4">Proyecto: {{project.project_name}}</h1>
-            <p class="lead mb-1">Compañía: {{project.company}}</p>
+            <p class="lead mb-1"><strong>Compañía: </strong> {{project.company}}</p>
             <p class="lead">
-                Estado: 
+                <strong>Estado: </strong>  
                 <span *ngIf="project.state == 0">Activo</span>
                 <span *ngIf="project.state == 1">Inactivo</span>
             </p>
@@ -15,10 +15,10 @@
     </div>
     <div class="jumbotron jumbotron-fluid version">
         <div class="container">
-            <h1 class="display-4">Versión: {{version.version_name}}</h1>
-            <p class="lead mb-1">Descripción: {{version.description}}</p>
+            <h1 class="display-4"><strong>Versión: </strong> {{version.version_name}}</h1>
+            <p class="lead mb-1"><strong>Descripción: </strong> {{version.description}}</p>
             <p class="lead">
-                Estado: 
+                <strong>Estado: </strong>
                 <span *ngIf="version.state == 0">Activo</span>
                 <span *ngIf="version.state == 1">Inactivo</span>
             </p>
@@ -72,7 +72,7 @@
             </div>
             <div class="form-group row mt-3">
                 <label class="col-12">Descripción HTML</label>
-                <angular-editor class="col-12" [placeholder]="'Enter text here...'" name="description_html" #description_html="ngModel" [(ngModel)]="versionChanges.description_html"></angular-editor>
+                <angular-editor class="col-12 p-0" [placeholder]="'Enter text here...'" name="description_html" #description_html="ngModel" [(ngModel)]="versionChanges.description_html"></angular-editor>
             </div>
             <div class="form-group row mt-3">
                 <label class="col-12">Descripción larga</label>
@@ -100,16 +100,16 @@
         <div class="modal-body m-3">
 
             <div class="form-group row">
-                <label class="col-6">Nombre del cambio de la versión</label>
-                <input class="col-6" type="text" name="change_name"  ngModel required>
+                <label class="col-12">Nombre del cambio de la versión</label>
+                <input class="col-12" type="text" name="change_name"  ngModel required>
             </div>
             <div class="form-group row mt-3">
-                <label class="col-6">Descripción HTML</label>
-                <input class="col-6" type="text" name="description_html" ngModel required>
+                <label class="col-12">Descripción HTML</label>
+                <angular-editor class="col-12 p-0" [placeholder]="'Enter text here...'" name="description_html" ngModel required></angular-editor>
             </div>
             <div class="form-group row mt-3">
-                <label class="col-6">Descripción larga</label>
-                <textarea class="col-6" type="text" name="description_long" ngModel required>
+                <label class="col-12">Descripción larga</label>
+                <textarea class="col-12" type="text" name="description_long" ngModel required>
                 </textarea>
             </div>
         

@@ -3,9 +3,9 @@
     <div class="jumbotron jumbotron-fluid">
         <div class="container">
             <h1 class="display-4">Proyecto: {{project.project_name}}</h1>
-            <p class="lead mb-1">Compañía: {{project.company}}</p>
+            <p class="lead mb-1"><strong>Compañía: </strong> {{project.company}}</p>
             <p class="lead">
-                Estado: 
+                <strong>Estado: </strong>
                 <span *ngIf="project.state == 0">Activo</span>
                 <span *ngIf="project.state == 1">Inactivo</span>
             </p>
@@ -14,9 +14,9 @@
     <div class="jumbotron jumbotron-fluid version">
         <div class="container">
             <h1 class="display-4">Versión: {{version.version_name}}</h1>
-            <p class="lead mb-1">Descripción: {{version.description}}</p>
+            <p class="lead mb-1"><strong>Descripción: </strong> {{version.description}}</p>
             <p class="lead">
-                Estado: 
+                <strong>Estado: </strong>
                 <span *ngIf="version.state == 0">Activo</span>
                 <span *ngIf="version.state == 1">Inactivo</span>
             </p>

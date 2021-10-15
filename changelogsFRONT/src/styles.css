@@ -45,7 +45,7 @@ button{
 }
 
 input{
-    border: 1px solid #333333;
+    border: 1px solid #ddd;
     outline:none !important;
     box-shadow: none !important;
     border-radius:20px !important;
@@ -100,31 +100,49 @@ input:focus{
     background: #dc354550;
     color: #dc3545;
     border: 2px solid #dc3545 !important;
-    border-radius: 5px;
+    border-radius: 20px;
     height: 35px;
     font-weight: bold;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
 }
 textarea{
     border-radius: 20px;
+    border-color: #ddd;
     -webkit-border-radius: 20px;
     -moz-border-radius: 20px;
     -ms-border-radius: 20px;
     -o-border-radius: 20px;
+    height: 100px;
 }
 select{
+    height: 30px;
     border-radius: 20px;
+    border-color: #ddd;
     -webkit-border-radius: 20px;
     -moz-border-radius: 20px;
     -ms-border-radius: 20px;
     -o-border-radius: 20px;
 }
+select:focus, select:active, select:focus-visible{
+    border: 1px solid #1A7CAB !important;
+    outline: none !important;
+}
+
 .angular-editor-textarea{
     height: 300px !important;
+    border-radius: 0px 0px 20px 20px;
+    -webkit-border-radius: 0px 0px 20px 20px;
+    -moz-border-radius: 0px 0px 20px 20px;
+    -ms-border-radius: 0px 0px 20px 20px;
+    -o-border-radius: 0px 0px 20px 20px;
 }
 
 .description{
     margin-top: 5px;;
-    border: 1px solid gray;
+    border: 1px solid #ddd;
     border-radius: 20px;
     padding: 10px;
     -webkit-border-radius: 20px;
@@ -136,4 +154,12 @@ select{
     display: flex;
     justify-content: center;
     align-items: center
+}
+
+.angular-editor-toolbar {
+    border-radius: 20px 20px 0px 0px;
+    padding: 10px !important;
+}
+.card{
+    margin-bottom: 30px;
 }

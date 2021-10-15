@@ -52,19 +52,19 @@
                 <fa-icon [icon]="faTimes"></fa-icon>
             </button>
         </div>
-        <div class="modal-body">
+        <div class="modal-body m-3">
 
             <div class="form-group row">
-                <label class="col-6">Nombre del proyecto</label>
-                <input class="col-6" type="text" name="name" #name="ngModel" [(ngModel)]="project.project_name">
+                <label class="col-12">Nombre del proyecto</label>
+                <input class="col-12" type="text" name="name" #name="ngModel" [(ngModel)]="project.project_name">
             </div>
             <div class="form-group row mt-3">
-                <label class="col-6">Compañía</label>
-                <input class="col-6" type="text" name="company" #company="ngModel" [(ngModel)]="project.company">
+                <label class="col-12">Compañía</label>
+                <input class="col-12" type="text" name="company" #company="ngModel" [(ngModel)]="project.company">
             </div>
             <div class="form-group row mt-3">
-                <label class="col-6">Estado</label>
-                <select class="col-6" name="state" #state="ngModel" [(ngModel)]="project.state">
+                <label class="col-12">Estado</label>
+                <select class="col-12" name="state" #state="ngModel" [(ngModel)]="project.state">
                     <option value="0">Activo</option>
                     <option value="1">Inactivo</option>
                 </select>
@@ -90,16 +90,16 @@
         </div>
         <div class="modal-body m-3">
             <div class="form-group row">
-                <label class="col-6">Nombre del proyecto</label>
-                <input class="col-6" type="text" name="project_name"  ngModel required>
+                <label class="col-12">Nombre del proyecto</label>
+                <input class="col-12" type="text" name="project_name"  ngModel required>
             </div>
             <div class="form-group row mt-3">
-                <label class="col-6">Compañía</label>
-                <input class="col-6" type="text" name="company" ngModel required>
+                <label class="col-12">Compañía</label>
+                <input class="col-12" type="text" name="company" ngModel required>
             </div>
             <div class="form-group row mt-3">
-                <label class="col-6">Estado</label>
-                <select class="col-6" name="state" ngModel required>
+                <label class="col-12">Estado</label>
+                <select class="col-12" name="state" ngModel required>
                     <option value="0">Activo</option>
                     <option value="1">Inactivo</option>
                 </select>
