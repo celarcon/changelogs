@@ -7,12 +7,14 @@ import { faTrashAlt, faPen, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgForm } from '@angular/forms';
 import Swal from 'sweetalert2';
+
 @Component({
   selector: 'app-projects',
   templateUrl: './projects.component.html',
   styleUrls: ['./projects.component.css'],
   providers: [ProjectService, NgbModalConfig, NgbModal],
 })
+
 export class ProjectsComponent implements OnInit, DoCheck {
   public status: string;
   public project: Project;
@@ -40,6 +42,7 @@ export class ProjectsComponent implements OnInit, DoCheck {
     this.identity = this._userService.getIdentity();
     this.token = this._userService.getToken();
   }
+
 
   ngOnInit(): void {
 

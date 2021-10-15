@@ -53,4 +53,7 @@ export class HomeComponent implements OnInit {
     this._router.navigate(['versions/' + idProject ]);
   }
 
+  login(){
+    this._router.navigate(['login']);
+  }
 }
