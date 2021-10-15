@@ -2,52 +2,66 @@
 
 
 :host {
-    --dark-sky-blue: #93B7BE;
-    --mint-cream: var(#F1FFFA);
-    --pale-silver:#D5C7BC;
-    --onyx: #454545;
     --danger: #dc3545;
+    --blue-ossian: #1A7CAB;
+    --grey2--ossian: #333333; 
+    --grey-ossina: #282828 ;
   }
 
   html,body{
     height:90%;
-    font-family: 'Muli' !important;
-    background-color: #F1FFFA !important;
+    font-family: 'Ubuntu' !important;
+    background-color: #333333 !important;
 }
-
+h1,h2,h3{
+    color: white;
+}
 button{
     outline:none !important;
     box-shadow: none !important;
 }
 
 .btn-primary{
-    background:  #93B7BE !important;
+    background:  #1A7CAB !important;
     border: none !important;
     outline:none !important;
     box-shadow: none !important;
 }
+.btn-primary:hover{
+    background:  #1A7CAB !important;
+}
 
 .btn-outline-primary{
-    color: #93B7BE !important;
-    border-color: #93B7BE !important;
+    border: 2px solid #1A7CAB !important;
+    color: #1A7CAB !important;
+    border-color: #1A7CAB !important;
 }
 .btn-outline-primary:hover {
     color: #fff !important;
-    background: #93B7BE !important;
+    background: #1A7CAB !important;
+}
+.btn-outline-danger{
+    border: 2px solid #dc3545 !important;
 }
 
 input{
+    border: 1px solid #333333;
     outline:none !important;
     box-shadow: none !important;
+    border-radius:20px !important;
+    -webkit-border-radius:20px !important;
+    -moz-border-radius:20px !important;
+    -ms-border-radius:20px !important;
+    -o-border-radius:20px !important;
 }
 
 input:focus{
- border-color: #93B7BE !important;
+ border-color: #1A7CAB !important;
 }
 
 .bg-dark-changelogs{
     --bs-bg-opacity: 1;
-    background: #454545 !important;
+    background: #282828 !important;
 }
 
 .delete{
@@ -55,30 +69,52 @@ input:focus{
     float: right;
 }
 .edit{
-    color: #454545;
+    color: #282828;
     float: right; 
     margin-right: 10px;
 }
 .jumbotron{
-    background: #93B7BE;
-    color: #F1FFFA;
+    background: #1A7CAB;
+    color: white;
     border-radius: 5px;
     margin-top: 30px;
     padding: 10px;
 }
 
 .jumbotron.version{
-    background: #D5C7BC;
+    background: #282828;
 }
 
+.btn{
+    font-weight: bold !important;
+    border-radius: 20px !important;
+    -webkit-border-radius: 20px !important;
+    -moz-border-radius: 20px !important;
+    -ms-border-radius: 20px !important;
+    -o-border-radius: 20px !important;
+}
 .error{
     display: flex;
     align-items: center;
     justify-content: center;
     background: #dc354550;
     color: #dc3545;
-    border: 2px solid #dc3545;
+    border: 2px solid #dc3545 !important;
     border-radius: 5px;
     height: 35px;
     font-weight: bold;
+}
+textarea{
+    border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
+}
+select{
+    border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
 }

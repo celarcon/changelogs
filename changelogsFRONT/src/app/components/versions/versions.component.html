@@ -19,13 +19,14 @@
         </div>
     </div>
     <div class="row">
-        <div *ngFor="let version of versions; let i=index;" class="col-sm-6 mt-2">
+        <div *ngFor="let version of versions; let i=index;" class="col-12 mt-2">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title mb-3"><strong>{{version.version_name}}</strong>
                         <fa-icon (click)="deleteVersion(project.id, version.id)" [icon]="faTrash" class="delete" ></fa-icon>
                         <fa-icon (click)="edit(editContent, version.id)" [icon]="faPen" class="edit"></fa-icon>
                     </h5>
+                    <hr>
                     <p class="card-text m-0"><strong>Descripción: </strong> {{version.description}}</p>
                     <p class="card-text m-0"><strong>Descripción html: </strong> {{version.description_html}}</p>
                     <p class="card-text m-0"><strong>Fecha: </strong> {{version.version_date}}</p>
@@ -38,7 +39,9 @@
                         </span>
                     </p>
                     <p class="card-text mt-0"><strong>Autor:</strong> {{version.publisher}}</p>
-                    <a class="btn btn-primary"  (click)="viewChangeVersions(project.id, version.id)">Ver cambios en versiones</a>
+                    <div style="text-align: right;">
+                        <a class="btn btn-primary"  (click)="viewChangeVersions(project.id, version.id)">Ver cambios en versiones</a>
+                    </div>
                 </div>
             </div>
         </div>

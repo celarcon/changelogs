@@ -29,10 +29,11 @@
         </div>
     </div>
     <div class="row">
-        <div *ngFor="let versionChanges of versionsChanges;" class="col-sm-6 mt-2">
+        <div *ngFor="let versionChanges of versionsChanges;" class="col-12 mt-2">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title mb-3"><strong>{{versionChanges.change_name}}</strong></h5>
+                    <hr>
                     <p class="card-text m-0"><strong>Descripción HTML: </strong>{{versionChanges.description_html}}</p>
                     <p class="card-text"><strong>Descripción larga: </strong>{{versionChanges.description_long}}</p>
                 </div>

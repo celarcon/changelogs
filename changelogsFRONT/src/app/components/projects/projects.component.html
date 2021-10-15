@@ -19,6 +19,7 @@
                         <fa-icon (click)="deleteProject(project.id)" [icon]="faTrash" class="delete"></fa-icon>
                         <fa-icon (click)="edit(editContent, project.id)" [icon]="faPen" class="edit"></fa-icon>
                     </h5>
+                    <hr>
                     <p class="card-text m-0"><strong>Compañía: </strong>{{project.company}}</p>
                     <p class="card-text"><strong>Estado: </strong> 
                         <span *ngIf="project.state == 0">
@@ -28,7 +29,9 @@
                             inactivo
                         </span>
                     </p>
-                    <a class="btn btn-primary" (click)="viewVersions(project.id)">Ver versiones</a>
+                    <div style="text-align: right;">
+                        <a class="btn btn-primary" (click)="viewVersions(project.id)">Ver versiones</a>
+                    </div>
                 </div>
             </div>
         </div>
