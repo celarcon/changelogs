@@ -2,7 +2,8 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { routing, appRoutingProviders } from './app.routing';
 import { FormsModule } from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';  
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -15,7 +16,8 @@ import { HomeComponent } from './components/home/home.component';
 import { UserService } from './services/user.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
+import { VersionsChangesPublicComponent } from './components/home/versions-changes/versions-changes.component';
+import { VersionsPublicComponent } from './components/home/versions/versions.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,7 +26,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     VersionsComponent,
     VersionsChangesComponent,
     NavbarComponent,
-    HomeComponent
+    HomeComponent,
+    VersionsChangesPublicComponent,
+    VersionsPublicComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +37,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     HttpClientModule,
     routing,
     FontAwesomeModule,
-    NgbModule
+    NgbModule,
+    CommonModule
   ],
   providers: [
     appRoutingProviders,
