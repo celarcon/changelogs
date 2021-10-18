@@ -2,6 +2,9 @@
 
 var validator = require('validator');
 var Version = require('../models/version');
+const Image = require('../models/version_images');
+const sequelize = require('../database/db');
+const fs = require('fs').promises;
 
 var controller = {
 
@@ -207,6 +210,75 @@ var controller = {
                 res: err
             });
         });
+    },
+
+    uploadImageVersion: async function(req, res){
+
+        var params = req.files;
+        var idVersion = req.params.idVersion;
+        var sqlQuerry ='INSERT INTO version_images ( version_id, image_url, image_name) VALUES';
+
+        try{
+
+            params.map((imageMap, index) => {
+                let path = imageMap.path.replace(/\\/g, "\\\\");
+                console.log(path);
+                sqlQuerry += '('+idVersion+',"'+path+'", "'+imageMap.originalname+'")';
+                if(index != params.length-1){
+                    sqlQuerry +=',';
+                }
+            });
+            console.log(sqlQuerry);
+
+            await sequelize.query(sqlQuerry, { type: sequelize.QueryTypes.INSERT }).then( images => {
+                return res.status(200).send({
+                    message: "Imagenes subidas correctamente",
+                    res: images
+                });
+            }, function (err) {
+                return res.status(500).send({
+                    message: "Upss! hubo un error al subir las imagenes",
+                    res: err
+                });
+            });
+                           
+        }catch(err){
+            return res.status(500).send({
+                message: 'error',
+                res: err
+            });
+        }
+        
+    },
+
+    deleteImageVersion: async function(req, res){
+
+        var idImage = req.params.idImage;
+        var idVersion = req.params.idVersion;
+
+        await Image.findOne({ where: { id: idImage, version_id:idVersion } }).then( async result=>{
+            console.log(result.image_url);
+            await Image.destroy({ where: { id: idImage, version_id:idVersion } }).then( imageDelete => {
+                console.log(result.image_url);
+                fs.unlink(result.image_url).then(() => {
+                    return res.status(200).send({
+                        message: "Imagen eliminada correctamente",
+                        res: imageDelete
+                    });
+                }).catch(err => {
+                    return res.status(200).send({
+                        message: "La imagen no se pudo eliminar",
+                        res: imageDelete
+                    });
+                });
+            }, function (err) {
+                return res.status(200).send({
+                    message: "Upss! hubo un error al eliminar la imagen",
+                    res: err
+                });
+            });
+        });
+
     }
 
 };

@@ -9,7 +9,9 @@ var router = express.Router();
 router.get('/project/:idProject/version/:idVersion', VersionController.getVersion);
 router.get('/project/:idProject/versions', VersionController.getVersions);
 router.post('/project/:idProject/version', md_auth.authenticated, VersionController.createVersion);
+router.post('/project/:idProject/version/:idVersion/uploadImage', md_auth.authenticated, VersionController.uploadImageVersion);
 router.put('/project/:idProject/version/:idVersion', md_auth.authenticated, VersionController.updateVersion);
 router.delete('/project/:idProject/version/:idVersion', md_auth.authenticated, VersionController.deleteVersion);
+router.delete('/project/:idProject/version/:idVersion/uploadImage/:idImage', md_auth.authenticated, VersionController.deleteImageVersion);
 
 module.exports = router;

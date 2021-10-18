@@ -1,8 +1,8 @@
 'use strict'
 
 //Requires
-var express = require('express');
-
+const express = require('express');
+const multer = require('multer');
 //Ejecutar express
 var app = express();
 
@@ -13,6 +13,7 @@ var version_routes = require('./routes/version');
 var version_changes_routes = require('./routes/version_changes');
 
 //Middleweres
+app.use(multer({ dest: 'public/images'}).any('image'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 

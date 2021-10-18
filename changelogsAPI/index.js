@@ -1,6 +1,5 @@
 'use strict'
 
-var conenection = require('./database/connection');
 const app = require('./app');
 const sequelize = require('./database/db');
 

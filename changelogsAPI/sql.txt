@@ -27,3 +27,9 @@ CREATE TABLE user (
     name varchar(255),
     password varchar(255)
 );
+CREATE TABLE version_images (
+	id int(11) NOT NULL  AUTO_INCREMENT PRIMARY KEY,
+	version_id int(11) NOT NULL,
+	image_url varchar(255) DEFAULT NULL,
+	image_name varchar(255) DEFAULT NULL
+);
