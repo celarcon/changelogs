@@ -5,6 +5,7 @@ var Version = require('../models/version');
 const Image = require('../models/version_images');
 const sequelize = require('../database/db');
 const fs = require('fs').promises;
+const { duration } = require('moment');
 
 var controller = {
 
@@ -249,6 +250,33 @@ var controller = {
             });
         }
         
+    },
+    getImagesVersion:async function(req, res){
+
+        var idVersion = req.params.idVersion;
+        var idImage = req.params.idImage;
+
+        await Image.findAll({
+            where: {
+                version_id: idVersion,
+            }
+        }).then(function (version) {
+            if (version) {
+                return res.status(200).send({
+                    message: "Imagnes obtenidas correctamente",
+                    res: version
+                });
+            } else {
+                return res.status(200).send({
+                    message: "Imagenes no existen",
+                });
+            }
+        }, function (err) {
+            return res.status(200).send({
+                message: "Upss! hubo un error al obtener las imagenes",
+                res: err
+            });
+        });
     },
 
     deleteImageVersion: async function(req, res){

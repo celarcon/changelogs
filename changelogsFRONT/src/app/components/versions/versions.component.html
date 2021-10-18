@@ -34,6 +34,12 @@
                     <p>{{version.description}}</p>
                     <p class="card-text m-0"><strong>Descripción html: </strong></p>
                     <p class="description" [innerHTML]="version.description_html"></p>
+                    <p class="card-text m-0"><strong>Imagenes Versión: </strong></p>
+                    <p>
+                        <span *ngFor="let image of images">
+                           <img [src]='getImage(0)' width="200px" height="200px"> 
+                        </span>
+                    </p>
                     <p class="card-text m-0"><strong>Fecha: </strong> </p>
                     <p>{{version.version_date | date:'d/M/yyyy'}}</p>
                     <p class="card-text m-0"> <strong> Estado:</strong> </p>

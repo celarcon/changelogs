@@ -54,7 +54,14 @@ export class VersionService{
         let headers = new HttpHeaders().set('Content-type', 'application/json')
                                        .set('Authorization', this._userService.getToken());
 
-        return this._http.delete(this.url+'/project/'+idProject+'/version/'+idVersion, {headers: headers});
+        return this._http.delete(this.url+'project/'+idProject+'/version/'+idVersion, {headers: headers});
+    }
+
+    getImagesVersion(idProject: any, idVersion: any): Observable<any>{
+
+        let headers = new HttpHeaders().set('Content-type', 'application/json');
+
+        return this._http.get(this.url+'project/'+idProject+'/version/'+idVersion+'/images', {headers: headers});
     }
 
 }

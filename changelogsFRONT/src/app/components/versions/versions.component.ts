@@ -10,6 +10,8 @@ import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgForm } from '@angular/forms';
 import Swal from 'sweetalert2';
 import {DatePipe} from '@angular/common';
+import { DomSanitizer } from "@angular/platform-browser";
+import { global } from '../../services/global';
 @Component({
   selector: 'app-versions',
   templateUrl: './versions.component.html',
@@ -22,6 +24,7 @@ export class VersionsComponent implements OnInit, DoCheck {
   public versions: Array<Version>;
   public version: Version;
   public project: Project;
+  public images: any;
 
   public faTrash = faTrashAlt;
   public faPen = faPen;
@@ -32,7 +35,9 @@ export class VersionsComponent implements OnInit, DoCheck {
 
   public modalReference: any;
   public date: any;
-
+  public srcImages = "c:/xampp/htdocs/changelogs/changelogsAPI/";
+  public url: string;
+  
   constructor(
     private _userService: UserService,
     private _versionService: VersionService,
@@ -40,8 +45,10 @@ export class VersionsComponent implements OnInit, DoCheck {
     private _datepipe: DatePipe,
     private _route: ActivatedRoute,
     private _router: Router,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private sanitizer: DomSanitizer 
   ) {
+    this.sanitizer = sanitizer;
     this.status = '';
     this.versions = [];
     let date = new Date();
@@ -50,6 +57,7 @@ export class VersionsComponent implements OnInit, DoCheck {
 
     this.identity = this._userService.getIdentity();
     this.token = this._userService.getToken();
+    this.url = global.url;
   }
 
   ngOnInit(): void {
@@ -61,6 +69,7 @@ export class VersionsComponent implements OnInit, DoCheck {
     let idProject = this._route.snapshot.params['idProject'];
     this.getAllVersions();
     this.getProject(idProject);
+    this.getImagesVersion();
   }
 
   ngDoCheck() {
@@ -118,6 +127,19 @@ export class VersionsComponent implements OnInit, DoCheck {
           vers.state,
           vers.publisher
         );
+      },
+      (error) => {
+        this.status = 'error';
+        console.log(error);
+      }
+    );
+  }
+
+  getImagesVersion() {
+    let idProject = this._route.snapshot.params['idProject'];
+    this._versionService.getImagesVersion(idProject, 1).subscribe(
+      (response) => {
+        this.images = response.res;
       },
       (error) => {
         this.status = 'error';
@@ -264,6 +286,10 @@ export class VersionsComponent implements OnInit, DoCheck {
 
   goBack() {
     this._router.navigate(['projects']);
+  }
+
+  getImage(idImage: any){
+    return this.sanitizer.bypassSecurityTrustUrl(this.srcImages + this.images[idImage].image_url);
   }
 
 }

@@ -8,6 +8,7 @@ var router = express.Router();
 
 router.get('/project/:idProject/version/:idVersion', VersionController.getVersion);
 router.get('/project/:idProject/versions', VersionController.getVersions);
+router.get('/project/:idProject/version/:idVersion/images', VersionController.getImagesVersion);
 router.post('/project/:idProject/version', md_auth.authenticated, VersionController.createVersion);
 router.post('/project/:idProject/version/:idVersion/uploadImage', md_auth.authenticated, VersionController.uploadImageVersion);
 router.put('/project/:idProject/version/:idVersion', md_auth.authenticated, VersionController.updateVersion);
