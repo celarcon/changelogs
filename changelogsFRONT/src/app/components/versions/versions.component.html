@@ -87,7 +87,7 @@
             </div>
             <div class="form-group row mt-3">
                 <label class="col-12">Fecha</label>
-                <input class="col-12" type="date" name="version_date" #version_date="ngModel" [(ngModel)]="version.version_date" required>
+                <input class="col-12" type="date" name="version_date" #version_date="ngModel" [ngModel]="version.version_date | date:'yyyy-MM-dd'" (ngModelChange)="version.version_date=$event" required>
             </div>
             <div class="form-group row mt-3">
                 <label class="col-12">Estado</label>

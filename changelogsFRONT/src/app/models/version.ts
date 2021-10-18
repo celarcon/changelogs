@@ -5,7 +5,7 @@ export class Version{
         public version_name: string,
         public description: string,
         public description_html: string,
-        public version_date: string,
+        public version_date: Date,
         public state: number,
         public publisher: string
     ){}

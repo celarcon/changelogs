@@ -37,7 +37,8 @@ export class VersionsChangesPublicComponent implements OnInit {
     this.idVersion = 0;
     this.versionsChanges = [];
     this.versionChanges = new VersionChanges('', '', '', '', '');
-    this.version = new Version('', '', '', '', '', '', 0, '');
+    let date = new Date();
+    this.version = new Version('', '', '', '', '', date, 0, '');
     this.project = new Project('', '', '', 0);
   }
 

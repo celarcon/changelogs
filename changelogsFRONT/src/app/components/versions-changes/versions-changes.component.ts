@@ -34,6 +34,7 @@ export class VersionsChangesComponent implements OnInit, DoCheck {
   public idProject: string;
 
   public modalReference: any;
+  public date = Date;
 
   constructor(
     private _userService: UserService,
@@ -47,7 +48,8 @@ export class VersionsChangesComponent implements OnInit, DoCheck {
     this.status = '';
     this.versionsChanges = [];
     this.versionChanges = new VersionChanges('', '', '', '', '');
-    this.version = new Version('', '', '', '', '', '', 0, '');
+    let date = new Date();
+    this.version = new Version('', '', '', '', '', date, 0, '');
     this.project = new Project('', '', '', 0);
 
     this.identity = this._userService.getIdentity();

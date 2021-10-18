@@ -9,11 +9,12 @@ import { faTrashAlt, faPen, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgForm } from '@angular/forms';
 import Swal from 'sweetalert2';
+import {DatePipe} from '@angular/common';
 @Component({
   selector: 'app-versions',
   templateUrl: './versions.component.html',
   styleUrls: ['./versions.component.css'],
-  providers: [VersionService, ProjectService]
+  providers: [VersionService, ProjectService, DatePipe]
 })
 export class VersionsComponent implements OnInit, DoCheck {
 
@@ -30,18 +31,21 @@ export class VersionsComponent implements OnInit, DoCheck {
   public token: any;
 
   public modalReference: any;
+  public date: any;
 
   constructor(
     private _userService: UserService,
     private _versionService: VersionService,
     private _projectService: ProjectService,
+    private _datepipe: DatePipe,
     private _route: ActivatedRoute,
     private _router: Router,
     private modalService: NgbModal
   ) {
     this.status = '';
     this.versions = [];
-    this.version = new Version('', '', '', '', '', '', 0, '');
+    let date = new Date();
+    this.version = new Version('', '', '', '', '', date, 0, '');
     this.project = new Project('', '', '', 0);
 
     this.identity = this._userService.getIdentity();
@@ -71,6 +75,7 @@ export class VersionsComponent implements OnInit, DoCheck {
       (response) => {
         for (let vers of response.res) {
           let tempVersion = new Version(vers.id, vers.project_id, vers.version_name, vers.description, vers.description_html, vers.version_date, vers.state, vers.publisher);
+          this.date = this._datepipe.transform(vers.version_date, 'dd/MM/yyyy');
           this.versions.push(tempVersion);
         }
       },
