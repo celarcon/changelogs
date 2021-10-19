@@ -4,6 +4,7 @@ var validator = require('validator');
 var Version = require('../models/version');
 const Image = require('../models/version_images');
 const sequelize = require('../database/db');
+const fsPromise = require('fs').promises;
 const fs = require('fs');
 const path = require('path');
 
@@ -303,10 +304,9 @@ var controller = {
         var idVersion = req.params.idVersion;
 
         await Image.findOne({ where: { id: idImage, version_id:idVersion } }).then( async result=>{
-            console.log(result.image_url);
+            var urlImage = result.image_url;
             await Image.destroy({ where: { id: idImage, version_id:idVersion } }).then( imageDelete => {
-                console.log(result.image_url);
-                fs.unlink(result.image_url).then(() => {
+                fsPromise.unlink(urlImage).then(() => {
                     return res.status(200).send({
                         message: "Imagen eliminada correctamente",
                         res: imageDelete

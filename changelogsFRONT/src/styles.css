@@ -163,3 +163,10 @@ select:focus, select:active, select:focus-visible{
 .card{
     margin-bottom: 30px;
 }
+.deleteImage{
+    float: right;
+    border: none;
+    background: none;
+    color: #dc3545;
+    font-size: 20px;
+}

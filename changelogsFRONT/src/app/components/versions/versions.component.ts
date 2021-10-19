@@ -5,7 +5,7 @@ import { Version } from '../../models/version';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProjectService } from 'src/app/services/project.service';
 import { Project } from '../../models/project';
-import { faTrashAlt, faPen, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faTrashAlt, faPen, faTimes} from '@fortawesome/free-solid-svg-icons';
 import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgForm } from '@angular/forms';
 import Swal from 'sweetalert2';
@@ -291,6 +291,38 @@ export class VersionsComponent implements OnInit, DoCheck {
   goBack() {
     this._router.navigate(['projects']);
   }
+
+  deleteImage(idProject: any, idVersion: any, idImageVersion: any) {
+      Swal.fire({
+        title: 'Estas seguro?',
+        text: "Eliminarás esta imagen!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#93B7BE',
+        cancelButtonColor: '#dc3545',
+        confirmButtonText: 'ELIMINAR',
+        cancelButtonText: 'CANCELAR',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this._versionService.deleteImageVersion(idProject, idVersion,idImageVersion).subscribe(
+            (response) => {
+              if(response){
+              Swal.fire({
+                text: "La imagen se eliminó!",
+                confirmButtonColor: '#93B7BE',
+                icon: 'success',
+              });
+              this.getAllVersions();
+            }
+            },
+            (error) => {
+              this.status = 'error';
+              console.log(error);
+            }
+          );
+        }
+      });
+    }
 
 }
 
