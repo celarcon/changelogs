@@ -1,6 +1,6 @@
 export class Version{
     constructor(
-        public id: string,
+        public id: number,
         public project_id: string,
         public version_name: string,
         public description: string,

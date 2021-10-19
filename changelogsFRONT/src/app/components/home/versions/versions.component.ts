@@ -35,7 +35,7 @@ export class VersionsPublicComponent implements OnInit {
     this.status = '';
     this.versions = [];
     let date = new Date();
-    this.version = new Version('', '', '', '', '', date, 0, '');
+    this.version = new Version(0, '', '', '', '', date, 0, '');
     this.project = new Project('', '', '', 0);
 
     this.identity = this._userService.getIdentity();

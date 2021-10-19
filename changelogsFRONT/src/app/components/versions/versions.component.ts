@@ -24,7 +24,8 @@ export class VersionsComponent implements OnInit, DoCheck {
   public versions: Array<Version>;
   public version: Version;
   public project: Project;
-  public images: any;
+  public images: Array<any>[];
+  public idProject: any;
 
   public faTrash = faTrashAlt;
   public faPen = faPen;
@@ -35,7 +36,6 @@ export class VersionsComponent implements OnInit, DoCheck {
 
   public modalReference: any;
   public date: any;
-  public srcImages = "c:/xampp/htdocs/changelogs/changelogsAPI/";
   public url: string;
   
   constructor(
@@ -52,8 +52,9 @@ export class VersionsComponent implements OnInit, DoCheck {
     this.status = '';
     this.versions = [];
     let date = new Date();
-    this.version = new Version('', '', '', '', '', date, 0, '');
+    this.version = new Version(0, '', '', '', '', date, 0, '');
     this.project = new Project('', '', '', 0);
+    this.images = [];
 
     this.identity = this._userService.getIdentity();
     this.token = this._userService.getToken();
@@ -66,10 +67,9 @@ export class VersionsComponent implements OnInit, DoCheck {
       this._router.navigate(['/login']);
     }
 
-    let idProject = this._route.snapshot.params['idProject'];
+    this.idProject = this._route.snapshot.params['idProject'];
     this.getAllVersions();
-    this.getProject(idProject);
-    this.getImagesVersion();
+    this.getProject(this.idProject);
   }
 
   ngDoCheck() {
@@ -83,15 +83,18 @@ export class VersionsComponent implements OnInit, DoCheck {
     this._versionService.getVersions(idProject).subscribe(
       (response) => {
         for (let vers of response.res) {
-          let tempVersion = new Version(vers.id, vers.project_id, vers.version_name, vers.description, vers.description_html, vers.version_date, vers.state, vers.publisher);
+          let tempVersion = new Version(parseInt(vers.id), vers.project_id, vers.version_name, vers.description, vers.description_html, vers.version_date, vers.state, vers.publisher);
           this.date = this._datepipe.transform(vers.version_date, 'dd/MM/yyyy');
           this.versions.push(tempVersion);
+          this.getImagesVersion(vers.id);
         }
       },
       (error) => {
         this.status = 'error';
         console.log(error);
       });
+
+      console.log(this.images);
   }
 
   getProject(idProject: number) {
@@ -135,17 +138,18 @@ export class VersionsComponent implements OnInit, DoCheck {
     );
   }
 
-  getImagesVersion() {
+  getImagesVersion(idVersion: any) {
     let idProject = this._route.snapshot.params['idProject'];
-    this._versionService.getImagesVersion(idProject, 1).subscribe(
-      (response) => {
-        this.images = response.res;
-      },
-      (error) => {
-        this.status = 'error';
-        console.log(error);
-      }
-    );
+
+      this._versionService.getImagesVersion(idProject, idVersion).subscribe(
+        (response) => {
+          this.images[idVersion] = response.res;
+        },
+        (error) => {
+          this.status = 'error';
+          console.log(error);
+        }
+      ); 
   }
 
   edit(editContent: any, idVersion: any) {
@@ -286,10 +290,6 @@ export class VersionsComponent implements OnInit, DoCheck {
 
   goBack() {
     this._router.navigate(['projects']);
-  }
-
-  getImage(idImage: any){
-    return this.sanitizer.bypassSecurityTrustUrl(this.srcImages + this.images[idImage].image_url);
   }
 
 }

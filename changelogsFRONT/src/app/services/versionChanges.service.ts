@@ -29,7 +29,7 @@ export class VersionChangesService{
         return this._http.get(this.url+'project/'+idProject+'/version/'+idVersion+'/versionChanges/'+idVersionChange, {headers: headers});
     }
 
-    setVersionChanges(idProject: string,idVersion: string, versionChanges: any): Observable<any>{
+    setVersionChanges(idProject: string,idVersion: number, versionChanges: any): Observable<any>{
         let headers = new HttpHeaders().set('Content-type', 'application/json')
                                         .set('Authorization', this._userService.getToken());
         let params = JSON.stringify(versionChanges);

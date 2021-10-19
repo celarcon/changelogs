@@ -4,8 +4,8 @@ var validator = require('validator');
 var Version = require('../models/version');
 const Image = require('../models/version_images');
 const sequelize = require('../database/db');
-const fs = require('fs').promises;
-const { duration } = require('moment');
+const fs = require('fs');
+const path = require('path');
 
 var controller = {
 
@@ -217,6 +217,10 @@ var controller = {
 
         var params = req.files;
         var idVersion = req.params.idVersion;
+
+        
+
+        
         var sqlQuerry ='INSERT INTO version_images ( version_id, image_url, image_name) VALUES';
 
         try{
@@ -224,7 +228,7 @@ var controller = {
             params.map((imageMap, index) => {
                 let path = imageMap.path.replace(/\\/g, "\\\\");
                 console.log(path);
-                sqlQuerry += '('+idVersion+',"'+path+'", "'+imageMap.originalname+'")';
+                sqlQuerry += '('+idVersion+',"'+path+'", "'+imageMap.filename +'")';
                 if(index != params.length-1){
                     sqlQuerry +=',';
                 }
@@ -276,6 +280,20 @@ var controller = {
                 message: "Upss! hubo un error al obtener las imagenes",
                 res: err
             });
+        });
+    },
+
+    getImageVersion: async function(req, res){
+        var fileName = req.params.fileName;
+        var pathFile = './public/images/'+fileName;
+        fs.exists(pathFile, (exists)=>{
+            if(exists){
+                return res.sendFile(path.resolve(pathFile));
+            }else{
+                return res.status(400).send({
+                    message: 'La imagen no existe'
+                })
+            }
         });
     },
 

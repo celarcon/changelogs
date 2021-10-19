@@ -49,7 +49,7 @@ export class VersionsChangesComponent implements OnInit, DoCheck {
     this.versionsChanges = [];
     this.versionChanges = new VersionChanges('', '', '', '', '');
     let date = new Date();
-    this.version = new Version('', '', '', '', '', date, 0, '');
+    this.version = new Version(0, '', '', '', '', date, 0, '');
     this.project = new Project('', '', '', 0);
 
     this.identity = this._userService.getIdentity();
@@ -164,7 +164,7 @@ export class VersionsChangesComponent implements OnInit, DoCheck {
     this.modalReference = this.modalService.open(createContent);
   }
 
-  createVersionChanges(idProject: string, idVersion: string, projectForm: NgForm) {
+  createVersionChanges(idProject: string, idVersion: number, projectForm: NgForm) {
 
     Swal.fire({
       title: 'Estas seguro?',

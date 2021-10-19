@@ -36,8 +36,8 @@
                     <p class="description" [innerHTML]="version.description_html"></p>
                     <p class="card-text m-0"><strong>Imagenes Versión: </strong></p>
                     <p>
-                        <span *ngFor="let image of images">
-                           <img [src]='getImage(0)' width="200px" height="200px"> 
+                        <span *ngFor="let image of images[version.id]">
+                           <img src="{{url + 'project/'+idProject+'/version/'+version.id+'/image/' + image.image_name}}" width="100%"> 
                         </span>
                     </p>
                     <p class="card-text m-0"><strong>Fecha: </strong> </p>
@@ -88,8 +88,8 @@
             </div>
             <div class="form-group row mt-3">
                 <label class="col-12">Descripción HTML</label>
-                <textarea class="col-12" type="text" name="description_html" #description_html="ngModel" [(ngModel)]="version.description_html" required>
-                </textarea>
+                <angular-editor class="col-12 p-0" [placeholder]="'Enter text here...'" name="description_html" #description_html="ngModel" [(ngModel)]="version.description_html"></angular-editor>
+                <!--<textarea class="col-12" type="text" name="description_html" #description_html="ngModel" [(ngModel)]="version.description_html" required></textarea>-->
             </div>
             <div class="form-group row mt-3">
                 <label class="col-12">Fecha</label>

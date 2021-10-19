@@ -64,4 +64,11 @@ export class VersionService{
         return this._http.get(this.url+'project/'+idProject+'/version/'+idVersion+'/images', {headers: headers});
     }
 
+    getImageVersion(idProject: any, idVersion: any, fileName: any): Observable<any>{
+
+        let headers = new HttpHeaders().set('Content-type', 'application/json');
+
+        return this._http.get(this.url+'project/'+idProject+'/version/'+idVersion+'/image/'+fileName, {headers: headers});
+    }
+
 }
