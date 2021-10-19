@@ -170,3 +170,12 @@ select:focus, select:active, select:focus-visible{
     color: #dc3545;
     font-size: 20px;
 }
+
+::-webkit-file-upload-button {
+    background: #1A7CAB;
+    color: white;
+    padding: 5px;
+    margin: 5px;
+    border-radius: 20px;
+    border: 2px solid #1A7CAB;
+}

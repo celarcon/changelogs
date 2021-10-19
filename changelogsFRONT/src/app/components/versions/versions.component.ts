@@ -12,6 +12,8 @@ import Swal from 'sweetalert2';
 import {DatePipe} from '@angular/common';
 import { DomSanitizer } from "@angular/platform-browser";
 import { global } from '../../services/global';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-versions',
   templateUrl: './versions.component.html',
@@ -37,6 +39,7 @@ export class VersionsComponent implements OnInit, DoCheck {
   public modalReference: any;
   public date: any;
   public url: string;
+
   
   constructor(
     private _userService: UserService,
@@ -46,9 +49,8 @@ export class VersionsComponent implements OnInit, DoCheck {
     private _route: ActivatedRoute,
     private _router: Router,
     private modalService: NgbModal,
-    private sanitizer: DomSanitizer 
+
   ) {
-    this.sanitizer = sanitizer;
     this.status = '';
     this.versions = [];
     let date = new Date();
@@ -93,8 +95,6 @@ export class VersionsComponent implements OnInit, DoCheck {
         this.status = 'error';
         console.log(error);
       });
-
-      console.log(this.images);
   }
 
   getProject(idProject: number) {
@@ -322,6 +322,31 @@ export class VersionsComponent implements OnInit, DoCheck {
           );
         }
       });
+    }
+
+    captureFiles(event: any){
+      let archivos = event.target.files;
+      console.log(archivos);
+
+      try {
+
+        const file = event.target.files[0];
+
+        const formData = new FormData();
+        formData.append('image', file);
+
+        console.log(file);
+        console.log(formData);
+
+        this._versionService.uploadImagenVersion(this.idProject, 1, formData).subscribe(res => {
+            console.log('Respuesta del servidor', res);
+          }, (err) => {
+            console.log(err);
+          })
+      } catch (e) {
+        console.log('ERROR', e);
+  
+      }
     }
 
 }

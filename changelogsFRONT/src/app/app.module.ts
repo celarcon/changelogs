@@ -40,7 +40,7 @@ import { VersionsPublicComponent } from './components/home/versions/versions.com
     FontAwesomeModule,
     NgbModule,
     CommonModule,
-    AngularEditorModule 
+    AngularEditorModule
   ],
   providers: [
     appRoutingProviders,

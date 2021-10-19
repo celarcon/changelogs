@@ -78,4 +78,13 @@ export class VersionService{
         return this._http.delete(this.url+'project/'+idProject+'/version/'+idVersion+'/uploadImage/'+idImageVersion , {headers: headers});
     }
 
+    uploadImagenVersion(idProject: any, idVersion: any, fileData: any): Observable<any>{
+        let headers = new HttpHeaders().set('Content-type', 'application/json')
+                                       .set('Authorization', this._userService.getToken());
+
+        console.log(fileData);
+
+        return this._http.post(this.url+'project/'+idProject+'/version/'+idVersion+'/uploadImage' , fileData, {headers: headers});
+    }
+
 }
