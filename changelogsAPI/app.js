@@ -25,7 +25,7 @@ var storage = multer.diskStorage({
 })
 
 //Middleweres
-app.use(multer({ dest: 'public/images', storage:storage}).any('image'));
+app.use(multer({storage:storage}).any('file'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 

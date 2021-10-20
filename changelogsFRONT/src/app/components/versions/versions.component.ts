@@ -40,7 +40,8 @@ export class VersionsComponent implements OnInit, DoCheck {
   public date: any;
   public url: string;
 
-  
+  public archivos: any = [];
+
   constructor(
     private _userService: UserService,
     private _versionService: VersionService,
@@ -325,18 +326,16 @@ export class VersionsComponent implements OnInit, DoCheck {
     }
 
     captureFiles(event: any){
-      let archivos = event.target.files;
-      console.log(archivos);
-
+      this.archivos = event.target.files;
       try {
 
-        const file = event.target.files[0];
+        let file = event.target.files[0];
 
-        const formData = new FormData();
-        formData.append('image', file);
+        let formData:FormData = new FormData();
+        formData.append('file', file, file.name);
 
         console.log(file);
-        console.log(formData);
+        console.log(formData.get('file'));
 
         this._versionService.uploadImagenVersion(this.idProject, 1, formData).subscribe(res => {
             console.log('Respuesta del servidor', res);
