@@ -5,15 +5,13 @@ import { Version } from '../../models/version';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProjectService } from 'src/app/services/project.service';
 import { Project } from '../../models/project';
-import { faTrashAlt, faPen, faTimes} from '@fortawesome/free-solid-svg-icons';
+import { faTrashAlt, faPen, faTimes, faSave} from '@fortawesome/free-solid-svg-icons';
 import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgForm } from '@angular/forms';
 import Swal from 'sweetalert2';
 import {DatePipe} from '@angular/common';
-import { DomSanitizer } from "@angular/platform-browser";
 import { global } from '../../services/global';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 @Component({
   selector: 'app-versions',
   templateUrl: './versions.component.html',
@@ -50,7 +48,7 @@ export class VersionsComponent implements OnInit, DoCheck {
     private _route: ActivatedRoute,
     private _router: Router,
     private modalService: NgbModal,
-
+    private httpClient: HttpClient
   ) {
     this.status = '';
     this.versions = [];
@@ -220,6 +218,7 @@ export class VersionsComponent implements OnInit, DoCheck {
         this._versionService.editVersion(this.version).subscribe(
           (response) => {
             let vers = response.res;
+            this.uploadImage(this.version.id);
             this.version = new Version(
               vers.id,
               vers.project_id,
@@ -327,24 +326,30 @@ export class VersionsComponent implements OnInit, DoCheck {
 
     captureFiles(event: any){
       this.archivos = event.target.files;
-      try {
+    }
 
-        let file = event.target.files[0];
-
+    uploadImage(idVersion: any){
+      try{
         let formData:FormData = new FormData();
-        formData.append('file', file, file.name);
 
-        console.log(file);
-        console.log(formData.get('file'));
+        for(let i = 0; i< this.archivos.length; i++){
+          formData.append('files',  this.archivos[i], this.archivos[i].name);    
+        }
 
-        this._versionService.uploadImagenVersion(this.idProject, 1, formData).subscribe(res => {
-            console.log('Respuesta del servidor', res);
-          }, (err) => {
-            console.log(err);
-          })
+        this._versionService.uploadImagenVersion(this.idProject, idVersion, formData).subscribe(res => {
+          if(res){
+            Swal.fire({
+              text: "Imagenes añadidas!",
+              confirmButtonColor: '#93B7BE',
+              icon: 'success',
+            });
+          }
+        }, (err) => {
+          console.log(err);
+        })
       } catch (e) {
         console.log('ERROR', e);
-  
+
       }
     }
 

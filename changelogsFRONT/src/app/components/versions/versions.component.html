@@ -34,7 +34,7 @@
                     <p>{{version.description}}</p>
                     <p class="card-text m-0"><strong>Descripción html: </strong></p>
                     <p class="description" [innerHTML]="version.description_html"></p>
-                    <!--<p class="card-text m-0"><strong>Imagenes Versión: </strong></p>
+                    <p class="card-text m-0"><strong>Imagenes Versión: </strong></p>
                     <p>
                         <span *ngFor="let image of images[version.id]">
                             <button class="deleteImage" (click)="deleteImage(idProject,version.id,image.id)">
@@ -42,7 +42,7 @@
                             </button>
                            <img src="{{url + 'project/'+idProject+'/version/'+version.id+'/image/' + image.image_name}}" width="100%"> 
                         </span>
-                    </p>-->
+                    </p>
                     <p class="card-text m-0"><strong>Fecha: </strong> </p>
                     <p>{{version.version_date | date:'d/M/yyyy'}}</p>
                     <p class="card-text m-0"> <strong> Estado:</strong> </p>
@@ -93,10 +93,10 @@
                 <label class="col-12">Descripción HTML</label>
                 <angular-editor class="col-12 p-0" [placeholder]="'Enter text here...'" name="description_html" #description_html="ngModel" [(ngModel)]="version.description_html"></angular-editor>
             </div>
-            <!--<div class="form-group row mt-3">
+            <div class="form-group row mt-3">
                 <label class="col-12">Subir imagenes version</label>
                 <input type="file" (change)="captureFiles($event)" multiple>
-            </div>-->
+            </div>
             <div class="form-group row mt-3">
                 <label class="col-12">Fecha</label>
                 <input class="col-12" type="date" name="version_date" #version_date="ngModel" [ngModel]="version.version_date | date:'yyyy-MM-dd'" (ngModelChange)="version.version_date=$event" required>

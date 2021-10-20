@@ -79,8 +79,7 @@ export class VersionService{
     }
 
     uploadImagenVersion(idProject: any, idVersion: any, fileData: any): Observable<any>{
-        let headers = new HttpHeaders().set('Content-type', 'application/json')
-                                       .set('Authorization', this._userService.getToken());
+        let headers = new HttpHeaders().set('Authorization', this._userService.getToken());
 
 
         return this._http.post(this.url+'project/'+idProject+'/version/'+idVersion+'/uploadImage' , fileData, {headers: headers});
