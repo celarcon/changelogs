@@ -5,7 +5,7 @@ import { Version } from '../../../models/version';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProjectService } from 'src/app/services/project.service';
 import { Project } from '../../../models/project';
-
+import { global } from '../../../services/global';
 @Component({
   selector: 'app-versions',
   templateUrl: './versions.component.html',
@@ -19,9 +19,11 @@ export class VersionsPublicComponent implements OnInit {
   public versions: Array<Version>;
   public version: Version;
   public project: Project;
+  public images: Array<any>[];
 
   public identity: any;
   public token: any;
+  public url: string;
 
   public modalReference: any;
 
@@ -37,6 +39,8 @@ export class VersionsPublicComponent implements OnInit {
     let date = new Date();
     this.version = new Version(0, '', '', '', '', date, 0, '');
     this.project = new Project('', '', '', 0);
+    this.images = [];
+    this.url = global.url;
 
     this.identity = this._userService.getIdentity();
     this.token = this._userService.getToken();
@@ -56,6 +60,7 @@ export class VersionsPublicComponent implements OnInit {
         for (let vers of response.res) {
           let tempVersion = new Version(vers.id, vers.project_id, vers.version_name, vers.description, vers.description_html, vers.version_date, vers.state, vers.publisher);
           this.versions.push(tempVersion);
+          this.getImagesVersion(vers.id);
         }
       },
       (error) => {
@@ -103,6 +108,20 @@ export class VersionsPublicComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  getImagesVersion(idVersion: any) {
+    let idProject = this._route.snapshot.params['idProject'];
+
+      this._versionService.getImagesVersion(idProject, idVersion).subscribe(
+        (response) => {
+          this.images[idVersion] = response.res;
+        },
+        (error) => {
+          this.status = 'error';
+          console.log(error);
+        }
+      ); 
   }
 
   viewChangeVersions(idVersion: any, idProject: any): void {
